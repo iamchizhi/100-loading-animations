@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Motion Atlas | Animation Showcase</title>
-    <!-- Google Fonts: modern, clean typography -->
+    <title>Motion Canvas | Animation Explorations</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 (free icons) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -16,17 +13,17 @@
         }
 
         body {
-            background: linear-gradient(145deg, #f9fafc 0%, #eff2f8 100%);
-            font-family: 'Inter', sans-serif;
-            color: #1a2c3e;
-            scroll-behavior: smooth;
+            background: linear-gradient(145deg, #f5f7fc 0%, #eef2f6 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            color: #1a2a3f;
+            line-height: 1.4;
+            padding: 2rem 1.5rem 4rem;
         }
 
-        /* global container */
-        .container {
+        /* main container */
+        .landing {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem 2rem 4rem;
         }
 
         /* header section */
@@ -36,570 +33,392 @@
             position: relative;
         }
 
-        .hero h1 {
-            font-size: 3.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #1E2F5E, #2a4e77);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero .badge {
+        .badge {
             display: inline-block;
-            background: rgba(42, 78, 119, 0.12);
+            background: rgba(45, 85, 255, 0.12);
             backdrop-filter: blur(2px);
             padding: 0.35rem 1rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #1e4a76;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            color: #2c5f8a;
             margin-bottom: 1.2rem;
-            border: 1px solid rgba(30, 79, 118, 0.2);
+            border: 0.5px solid rgba(52, 94, 140, 0.2);
         }
 
-        .hero p {
-            max-width: 680px;
-            margin: 0 auto;
+        h1 {
+            font-size: 3.1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1C2E4A, #2B5F8A);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.8rem;
+        }
+
+        .subhead {
             font-size: 1.2rem;
-            color: #2c475e;
+            color: #4a627a;
+            max-width: 620px;
+            margin: 0 auto;
             font-weight: 400;
-            line-height: 1.5;
+            border-bottom: 1px solid #cddae9;
+            display: inline-block;
+            padding-bottom: 0.5rem;
         }
 
-        /* grid layout: 3 columns, responsive */
-        .showcase-grid {
+        .hero-description {
+            max-width: 700px;
+            margin: 1.2rem auto 0;
+            color: #5e6f8d;
+            font-size: 1rem;
+        }
+
+        /* grid layout: clean card wall */
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 2rem;
-            margin-top: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin-top: 0.8rem;
         }
 
-        /* card design — glassmorphism + modern shadows */
+        /* animated card effect */
         .card {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(0px);
             border-radius: 2rem;
+            transition: all 0.35s cubic-bezier(0.2, 0, 0, 1);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(156, 180, 204, 0.2);
             overflow: hidden;
-            transition: transform 0.25s ease, box-shadow 0.35s ease;
-            box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 24px 40px -12px rgba(0, 20, 40, 0.2);
-            background: rgba(255, 255, 255, 0.95);
-            border-color: rgba(100, 148, 196, 0.3);
+            transform: translateY(-8px);
+            background: #ffffff;
+            box-shadow: 0 25px 35px -12px rgba(0, 20, 40, 0.2), 0 0 0 1px rgba(72, 120, 184, 0.2);
         }
 
-        .preview-container {
-            background: #fefefe;
+        /* number and icon area */
+        .card-header {
+            padding: 1.5rem 1.5rem 0.5rem 1.5rem;
             display: flex;
-            justify-content: center;
             align-items: center;
-            min-height: 220px;
-            padding: 1.2rem;
-            border-bottom: 1px solid #eef2f8;
-            transition: background 0.2s;
+            gap: 0.75rem;
         }
 
-        /* individual animation frames */
-        .animation-stage {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: transparent;
-        }
-
-        /* ------------------------- */
-        /* 1. COFFEE CUP (steam & wiggle) */
-        .coffee-cup {
-            position: relative;
-            width: 90px;
-            height: 90px;
-            animation: gentleFloat 3s infinite ease-in-out;
-        }
-        .cup-body {
-            position: absolute;
-            bottom: 0;
-            width: 70px;
-            height: 55px;
-            background: #d9ae6c;
-            border-radius: 0 0 20px 20px;
-            left: 10px;
-            box-shadow: 0 6px 0 #b47c44;
-        }
-        .cup-handle {
-            position: absolute;
-            right: -8px;
-            top: 14px;
-            width: 16px;
-            height: 28px;
-            border: 3px solid #b87a47;
-            border-left: none;
-            border-radius: 0 20px 20px 0;
-        }
-        .steam {
-            position: absolute;
-            width: 8px;
-            height: 24px;
-            background: rgba(200, 200, 210, 0.5);
-            border-radius: 50%;
-            top: -18px;
-            left: 32px;
-            filter: blur(3px);
-            animation: steamRise 2.2s infinite;
-        }
-        .steam:nth-child(2) {
-            left: 48px;
-            animation-delay: 0.7s;
-            opacity: 0.6;
-        }
-        @keyframes gentleFloat {
-            0%,100% { transform: translateY(0px) rotate(0deg);}
-            50% { transform: translateY(-3px) rotate(1deg);}
-        }
-        @keyframes steamRise {
-            0% { transform: translateY(0) scale(0.8); opacity: 0.5; }
-            100% { transform: translateY(-28px) scale(1.2); opacity: 0; }
-        }
-
-        /* 2. GROWING PLANT */
-        .plant-pot {
-            position: relative;
-            width: 90px;
-            height: 100px;
-        }
-        .pot {
-            position: absolute;
-            bottom: 0;
-            width: 50px;
-            height: 35px;
-            background: #cb7b3c;
-            left: 20px;
-            border-radius: 0 0 12px 12px;
-        }
-        .stem {
-            position: absolute;
-            bottom: 30px;
-            left: 42px;
-            width: 6px;
-            height: 0px;
-            background: #5f8b4c;
-            transform-origin: bottom;
-            animation: growStem 2s infinite alternate ease-out;
-        }
-        .leaf {
-            position: absolute;
-            width: 16px;
-            height: 10px;
-            background: #6f9e4f;
-            border-radius: 80% 0 60% 40%;
-            bottom: calc(100% - 10px);
-            left: -6px;
-            opacity: 0;
-            animation: leafPop 2s infinite alternate 0.3s;
-        }
-        .leaf2 {
-            left: 6px;
-            transform: scaleX(-1);
-            animation-delay: 0.7s;
-        }
-        @keyframes growStem {
-            0% { height: 0px; opacity: 0;}
-            100% { height: 48px; opacity: 1;}
-        }
-        @keyframes leafPop {
-            0% { opacity: 0; transform: scale(0.6);}
-            100% { opacity: 1; transform: scale(1);}
-        }
-
-        /* 3. POURING LIQUID */
-        .pour-set {
-            position: relative;
-            width: 120px;
-            height: 100px;
-        }
-        .bottle {
-            position: absolute;
-            width: 35px;
-            height: 55px;
-            background: #99b2b7;
-            border-radius: 30% 30% 20% 20%;
-            left: 15px;
-            top: 5px;
-            transform: rotate(-25deg);
-            transform-origin: top right;
-            animation: tiltPour 2.5s infinite ease-in-out;
-        }
-        .drop {
-            position: absolute;
-            width: 8px;
-            height: 14px;
-            background: #6ab0de;
-            border-radius: 50%;
-            left: 44px;
-            top: 42px;
-            opacity: 0;
-            animation: dropFlow 2.5s infinite;
-        }
-        .glass {
-            position: absolute;
-            bottom: 0;
-            right: 5px;
-            width: 38px;
-            height: 48px;
-            border: 3px solid #acd0e8;
-            border-top: 2px solid transparent;
-            border-radius: 0 0 16px 16px;
-            background: rgba(106, 176, 222, 0.1);
-        }
-        @keyframes tiltPour {
-            0%, 100% { transform: rotate(-25deg);}
-            50% { transform: rotate(-50deg);}
-        }
-        @keyframes dropFlow {
-            0% { opacity: 0; transform: translateY(0);}
-            20% { opacity: 0.9;}
-            80% { opacity: 0.8; transform: translateY(28px);}
-            100% { opacity: 0; transform: translateY(38px);}
-        }
-
-        /* 4. SWINGING PENDULUM */
-        .pendulum {
-            width: 100px;
-            height: 110px;
-            position: relative;
-        }
-        .string {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 2px;
-            height: 60px;
-            background: #5a6e7c;
-            transform-origin: top center;
-            animation: swing 1.8s infinite alternate ease-in-out;
-        }
-        .bob {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 22px;
-            height: 22px;
-            background: #e07a5f;
-            border-radius: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        @keyframes swing {
-            0% { transform: rotate(-32deg);}
-            100% { transform: rotate(32deg);}
-        }
-
-        /* 5. BOUNCING BASKETBALL */
-        .bball {
-            width: 55px;
-            height: 55px;
-            background: radial-gradient(circle at 35% 35%, #e68a2e, #c25d1a);
-            border-radius: 50%;
-            position: relative;
-            box-shadow: 0 0 0 2px #2b1e0e inset;
-            animation: bounceBall 1.2s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
-        }
-        .bball:after {
-            content: "🏀";
-            position: absolute;
-            font-size: 28px;
-            left: 12px;
-            top: 10px;
-            opacity: 0.5;
-        }
-        @keyframes bounceBall {
-            0%,100% { transform: translateY(0px);}
-            50% { transform: translateY(-42px) scale(1.02);}
-        }
-
-        /* 6. TYPING ROBOT */
-        .robot {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .robot-face {
-            font-size: 3.5rem;
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
-            animation: typeGlow 1s infinite alternate;
-        }
-        .typing-text {
+        .index-icon {
+            font-size: 2.2rem;
+            font-weight: 600;
             background: #eef3fc;
-            padding: 6px 12px;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            margin-top: 8px;
-            font-family: monospace;
-            color: #1f6392;
-            animation: blinkCursor 1s step-end infinite;
-        }
-        @keyframes typeGlow {
-            0% { text-shadow: 0 0 0px #81c3e6;}
-            100% { text-shadow: 0 0 6px #4fa3cf;}
-        }
-        @keyframes blinkCursor {
-            0%,100% { border-right: 2px solid transparent; }
-            50% { border-right: 2px solid #1f6392; }
-        }
-
-        /* 7. UNFOLDING ORIGAMI */
-        .origami {
-            width: 80px;
-            height: 80px;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: foldReveal 3s infinite ease;
-        }
-        .crane {
-            width: 0;
-            height: 0;
-            border-left: 30px solid transparent;
-            border-right: 30px solid transparent;
-            border-bottom: 50px solid #f7d44a;
-            position: relative;
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            animation: paperSpin 3s infinite;
-        }
-        @keyframes foldReveal {
-            0% { opacity: 0.3; transform: scale(0.7) rotateY(0deg);}
-            50% { opacity: 1; transform: scale(1) rotateY(180deg);}
-            100% { opacity: 1; transform: scale(1) rotateY(360deg);}
-        }
-        @keyframes paperSpin {
-            0%,100% { filter: brightness(1);}
-            50% { filter: brightness(1.2) drop-shadow(0 2px 4px gold);}
-        }
-
-        /* 8. ROTATING GLOBE */
-        .globe {
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle at 30% 30%, #5fa7cf, #1b5170);
-            border-radius: 50%;
-            position: relative;
-            box-shadow: -5px 0 0 rgba(0,0,0,0.1) inset, 2px 4px 12px rgba(0,0,0,0.2);
-            animation: spinGlobe 4s infinite linear;
-        }
-        .globe:after {
-            content: "🌍";
-            position: absolute;
-            font-size: 2rem;
-            left: 20px;
-            top: 18px;
-            opacity: 0.8;
-        }
-        @keyframes spinGlobe {
-            0% { transform: rotate(0deg);}
-            100% { transform: rotate(360deg);}
-        }
-
-        /* card info */
-        .card-info {
-            padding: 1.2rem 1.4rem 1.4rem;
-            background: rgba(255,255,240,0.3);
-        }
-        .card-title {
+            width: 54px;
+            height: 54px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: #1c3d5e;
-            margin-bottom: 0.35rem;
+            justify-content: center;
+            border-radius: 28px;
+            color: #2c6289;
+            box-shadow: inset 0 1px 2px white, 0 2px 4px rgba(0,0,0,0.02);
+            font-family: monospace;
         }
-        .card-title i {
+
+        .title {
+            font-size: 1.55rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            background: linear-gradient(145deg, #1e3a5f, #2b5876);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        /* preview / emoji animation vibe */
+        .preview {
+            padding: 0 1.5rem;
+            margin: 0.6rem 0 0.8rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #5b728e;
+            font-weight: 450;
+        }
+
+        .motion-dots {
+            font-family: monospace;
             font-size: 1.2rem;
-            color: #4183a4;
-        }
-        .card-desc {
-            font-size: 0.85rem;
-            color: #40657b;
-            line-height: 1.4;
+            letter-spacing: 2px;
+            color: #7794b0;
         }
 
-        footer {
-            text-align: center;
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(72, 110, 138, 0.2);
+        .desc {
+            padding: 0rem 1.5rem 1rem;
             font-size: 0.85rem;
-            color: #587a94;
+            color: #62748c;
+            line-height: 1.45;
+            flex: 1;
         }
-        footer a {
-            color: #2c6c8f;
+
+        .card-footer {
+            padding: 1rem 1.5rem 1.5rem;
+            border-top: 1px solid rgba(128, 156, 184, 0.2);
+            background: rgba(248, 251, 255, 0.5);
+        }
+
+        .launch-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1f3b4e;
+            color: white;
             text-decoration: none;
+            padding: 0.6rem 1.4rem;
+            border-radius: 100px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            letter-spacing: 0.2px;
         }
 
-        @media (max-width: 750px) {
-            .container {
-                padding: 1.5rem;
+        .launch-link:hover {
+            background: #0c2a3b;
+            gap: 12px;
+            padding: 0.6rem 1.6rem;
+            box-shadow: 0 8px 14px -8px rgba(0, 32, 64, 0.3);
+        }
+
+        .arrow {
+            font-size: 1.1rem;
+            transition: transform 0.2s;
+        }
+
+        .launch-link:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* project folder style */
+        .folder-note {
+            font-family: monospace;
+            font-size: 0.7rem;
+            background: #eef2f0;
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            color: #3d6380;
+            margin-top: 0.3rem;
+        }
+
+        hr {
+            margin: 3rem 0 1rem;
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, #cbdae9, transparent);
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #7a8aa3;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 680px) {
+            body {
+                padding: 1rem;
             }
-            .hero h1 {
-                font-size: 2.4rem;
+            h1 {
+                font-size: 2.2rem;
             }
-            .showcase-grid {
+            .grid {
                 gap: 1.2rem;
+            }
+            .card-header {
+                padding: 1.2rem 1.2rem 0.2rem;
+            }
+            .title {
+                font-size: 1.3rem;
             }
         }
     </style>
 </head>
 <body>
-<div class="container">
+<div class="landing">
     <div class="hero">
-        <div class="badge">
-            <i class="fas fa-cubes"></i>  interactive motion gallery
-        </div>
-        <h1>Motion Atlas</h1>
-        <p>Eight expressive animations — from a sleepy coffee cup to a spinning globe. Each card brings a unique kinetic story to life, crafted with pure CSS.</p>
-    </div>
-
-    <div class="showcase-grid">
-        <!-- 001 coffee cup -->
-        <div class="card">
-            <div class="preview-container">
-                <div class="animation-stage">
-                    <div class="coffee-cup">
-                        <div class="cup-body"></div>
-                        <div class="cup-handle"></div>
-                        <div class="steam"></div>
-                        <div class="steam"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-info">
-                <div class="card-title"><i class="fas fa-mug-hot"></i> 001 · Coffee Cup</div>
-                <div class="card-desc">Gentle floating motion with rising aromatic steam. A cozy morning vibe.</div>
-            </div>
-        </div>
-
-        <!-- 002 growing plant -->
-        <div class="card">
-            <div class="preview-container">
-                <div class="animation-stage">
-                    <div class="plant-pot">
-                        <div class="pot"></div>
-                        <div class="stem">
-                            <div class="leaf"></div>
-                            <div class="leaf leaf2"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-info">
-                <div class="card-title"><i class="fas fa-seedling"></i> 002 · Growing Plant</div>
-                <div class="card-desc">Stem stretches upward as leaves bloom in an infinite spring rhythm.</div>
-            </div>
-        </div>
-
-        <!-- 003 pouring liquid -->
-        <div class="card">
-            <div class="preview-container">
-                <div class="animation-stage">
-                    <div class="pour-set">
-                        <div class="bottle"></div>
-                        <div class="drop"></div>
-                        <div class="glass"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-info">
-                <div class="card-title"><i class="fas fa-wine-bottle"></i> 003 · Pouring Liquid</div>
-                <div class="card-desc">Dynamic tilt and droplet fall. Smooth cascade into a glass.</div>
-            </div>
-        </div>
-
-        <!-- 004 swinging pendulum -->
-        <div class="card">
-            <div class="preview-container">
-                <div class="animation-stage">
-                    <div class="pendulum">
-                        <div class="string">
-                            <div class="bob"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-info">
-                <div class="card-title"><i class="fas fa-chart-line"></i> 004 · Swinging Pendulum</div>
-                <div class="card-desc">Rhythmic harmonic motion, classic physics-inspired loop.</div>
-            </div>
-        </div>
-
-        <!-- 005 bouncing basketball -->
-        <div class="card">
-            <div class="preview-container">
-                <div class="animation-stage">
-                    <div class="bball"></div>
-                </div>
-            </div>
-            <div class="card-info">
-                <div class="card-title"><i class="fas fa-basketball-ball"></i> 005 · Bouncing Basketball</div>
-                <div class="card-desc">Energetic bounce with squash-and-stretch illusion.</div>
-            </div>
-        </div>
-
-        <!-- 006 typing robot -->
-        <div class="card">
-            <div class="preview-container">
-                <div class="animation-stage">
-                    <div class="robot">
-                        <div class="robot-face">🤖 ⌨️</div>
-                        <div class="typing-text">>_ coding.exe</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-info">
-                <div class="card-title"><i class="fas fa-microchip"></i> 006 · Typing Robot</div>
-                <div class="card-desc">Retro robot with blinking cursor and electric glow effect.</div>
-            </div>
-        </div>
-
-        <!-- 007 unfolding origami -->
-        <div class="card">
-            <div class="preview-container">
-                <div class="animation-stage">
-                    <div class="origami">
-                        <div class="crane"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-info">
-                <div class="card-title"><i class="fas fa-paper-plane"></i> 007 · Unfolding Origami</div>
-                <div class="card-desc">Kinetic fold & rotational reveal, like a paper crane taking form.</div>
-            </div>
-        </div>
-
-        <!-- 008 rotating globe -->
-        <div class="card">
-            <div class="preview-container">
-                <div class="animation-stage">
-                    <div class="globe"></div>
-                </div>
-            </div>
-            <div class="card-info">
-                <div class="card-title"><i class="fas fa-globe-americas"></i> 008 · Rotating Globe</div>
-                <div class="card-desc">360° endless rotation, evoking world exploration.</div>
-            </div>
+        <div class="badge">✦ interactive motion library ✦</div>
+        <h1>animation atelier</h1>
+        <div class="subhead">coffee · plants · pendulums · robots & more</div>
+        <div class="hero-description">
+            a curated collection of 8 lively micro-interactions — each folder contains its own universe.
+            click any card to explore the animation experience.
         </div>
     </div>
 
-    <footer>
-        <i class="fas fa-code-branch"></i> interactive animation gallery · 8 unique micro-interactions · CSS-driven performance<br>
-        <span style="font-size: 0.75rem;">© motion atlas — every item inspired by 001 → 008 sequence. hover cards for subtle elevation.</span>
-    </footer>
+    <div class="grid" id="projectGrid">
+        <!-- each item will be filled from js array but also static for resilience 
+             but we build dynamically from manifest to guarantee exact folder names & titles -->
+    </div>
+    
+    <hr />
+    <div class="footer-note">
+        📂 all experiments locally available — each folder contains its own <code>index.html</code> <br/>
+        crafted with motion design principles & playful interactions
+    </div>
 </div>
+
+<script>
+    // ----- Master manifest: exact mapping from specs: 001 coffee cup, 002 growing plant, etc.
+    // corresponds to folders: 001 coffee cup, 002 growing plant, 003 pouring liquid, 004 swinging pendulum,
+    // 005 bouncing basketball, 006 typing robot, 007 unfolding origami, 008 rotating globe.
+    // Also includes README.md and global index.html but we link only to subpage experiments.
+    const projects = [
+        {
+            id: "001",
+            folder: "001 coffee cup",
+            title: "Coffee Cup",
+            shortDesc: "Steam rises & gentle warmth — a cozy ceramic ritual animation.",
+            emoji: "☕",
+            motionHint: "▰▰▰▰▰▰▰▰▰▰ 〰️",
+            extraNote: "swirling steam"
+        },
+        {
+            id: "002",
+            folder: "002 growing plant",
+            title: "Growing Plant",
+            shortDesc: "Leaf by leaf, a sprout reaches toward sunlight with organic motion.",
+            emoji: "🌱",
+            motionHint: "🌿 ➡ 🌳",
+            extraNote: "biomorphic easing"
+        },
+        {
+            id: "003",
+            folder: "003 pouring liquid",
+            title: "Pouring Liquid",
+            shortDesc: "Stream of fluid dynamics — cascade with glossy reflections.",
+            emoji: "💧",
+            motionHint: "⤵️💦⤵️",
+            extraNote: "liquid flow"
+        },
+        {
+            id: "004",
+            folder: "004 swinging pendulum",
+            title: "Swinging Pendulum",
+            shortDesc: "Hypnotic harmonic motion, time & gravity in perfect arc.",
+            emoji: "⏱️",
+            motionHint: "◀️  🔘  ▶️",
+            extraNote: "periodic swing"
+        },
+        {
+            id: "005",
+            folder: "005 bouncing basketball",
+            title: "Bouncing Basketball",
+            shortDesc: "Squash & stretch — energetic rebound with rhythm.",
+            emoji: "🏀",
+            motionHint: "⬇️ ⬆️ ⬇️",
+            extraNote: "parabolic bounce"
+        },
+        {
+            id: "006",
+            folder: "006 typing robot",
+            title: "Typing Robot",
+            shortDesc: "Retro-futuristic keys clacking, mechanical charm.",
+            emoji: "🤖⌨️",
+            motionHint: "⚡📟⚡",
+            extraNote: "click-click-clack"
+        },
+        {
+            id: "007",
+            folder: "007 unfolding origami",
+            title: "Unfolding Origami",
+            shortDesc: "Paper cranes reveal geometric elegance, fold by fold.",
+            emoji: "🕊️",
+            motionHint: "◻️ ➡ 🕊️",
+            extraNote: "tessellation ease"
+        },
+        {
+            id: "008",
+            folder: "008 rotating globe",
+            title: "Rotating Globe",
+            shortDesc: "Spherical journey — continents drifting in 3D space.",
+            emoji: "🌍",
+            motionHint: "🔄🌐🔄",
+            extraNote: "smooth rotation"
+        }
+    ];
+
+    // Helper: function to generate card HTML
+    function buildCard(proj) {
+        // ensure folder path is URL-friendly but keep spaces as they exist in directory names
+        // Since local files: should link to "./001 coffee cup/index.html" etc. (relative path)
+        const folderEncoded = proj.folder;  // spaces allowed in href, browser will encode automatically.
+        const linkHref = `./${folderEncoded}/index.html`;
+        
+        // Motion visual micro tag
+        return `
+            <div class="card">
+                <div class="card-header">
+                    <div class="index-icon">${proj.id}</div>
+                    <div class="title">${proj.title}</div>
+                </div>
+                <div class="preview">
+                    <span>${proj.emoji}</span>
+                    <span class="motion-dots">${proj.motionHint}</span>
+                    <span style="font-size:0.75rem; background:#eef0f5; padding:2px 8px; border-radius:40px;">${proj.extraNote}</span>
+                </div>
+                <div class="desc">
+                    ${proj.shortDesc}
+                    <div class="folder-note" style="margin-top: 8px;">📁 ${proj.folder}/</div>
+                </div>
+                <div class="card-footer">
+                    <a href="${linkHref}" class="launch-link" target="_blank" rel="noopener noreferrer">
+                        <span>launch animation</span>
+                        <span class="arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        `;
+    }
+
+    // Render grid
+    const gridContainer = document.getElementById('projectGrid');
+    if (gridContainer) {
+        projects.forEach(proj => {
+            const cardHtml = buildCard(proj);
+            gridContainer.insertAdjacentHTML('beforeend', cardHtml);
+        });
+    }
+
+    // Additional friendly console message for developer
+    console.log('✨ Landing ready — pointing to 8 animation folders (001 to 008). Each folder contains index.html');
+    console.log('Also includes README.md / global index.html accordingly.');
+</script>
+
+<!-- 
+    This landing page assumes the following directory structure:
+    - index.html (this landing)
+    - 001 coffee cup/
+        index.html
+    - 002 growing plant/
+        index.html
+    - 003 pouring liquid/
+        index.html
+    - 004 swinging pendulum/
+        index.html
+    - 005 bouncing basketball/
+        index.html
+    - 006 typing robot/
+        index.html
+    - 007 unfolding origami/
+        index.html
+    - 008 rotating globe/
+        index.html
+    - README.md (optional)
+    
+    All links are relative to current directory. If files are in same level, navigation works perfectly.
+    Enjoy interactive micro-worlds.
+-->
 </body>
 </html>
