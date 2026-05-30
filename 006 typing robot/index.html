@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Typing Robot | Line Drawing Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #1e1e2f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: system-ui, 'Segoe UI', monospace;
+        }
+
+        /* container — only the robot animation */
+        .robot-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .robot-svg {
+            width: 100%;
+            max-width: 700px;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+        }
+
+        /* base stroke style for all lines */
+        .draw-line {
+            fill: none;
+            stroke: #a0ffd0;
+            stroke-width: 2.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 800;
+            stroke-dashoffset: 800;
+            animation: drawSequence 5s cubic-bezier(0.2, 0.9, 0.3, 1.1) infinite;
+        }
+
+        /* individual delays for realistic sequential drawing */
+        .robot-head    { animation-delay: 0s; }
+        .robot-eyes    { animation-delay: 0.8s; }
+        .robot-mouth   { animation-delay: 1.1s; }
+        .robot-antennas{ animation-delay: 1.5s; }
+        .robot-torso   { animation-delay: 2.0s; }
+        .robot-arms    { animation-delay: 2.5s; }
+        .robot-fingers { animation-delay: 3.0s; }
+        .robot-keyboard { animation-delay: 3.5s; }
+        .typing-lines  { animation-delay: 4.0s; }
+        .spark-detail  { animation-delay: 4.5s; }
+
+        /* thinner stroke for delicate parts */
+        .thin-line {
+            stroke-width: 2.2;
+        }
+
+        /* keyboard keycaps (small rectangles) */
+        .key-stroke {
+            stroke-width: 2;
+        }
+
+        @keyframes drawSequence {
+            0% {
+                stroke-dashoffset: 800;
+                stroke-width: 2.5;
+                opacity: 0.1;
+            }
+            8% {
+                stroke-width: 3;
+                opacity: 1;
+            }
+            40% {
+                stroke-dashoffset: 0;
+                stroke-width: 2.8;
+                opacity: 1;
+            }
+            75% {
+                stroke-dashoffset: 0;
+                stroke-width: 2.8;
+                opacity: 1;
+            }
+            92% {
+                stroke-dashoffset: 800;
+                stroke-width: 2.2;
+                opacity: 0.4;
+            }
+            100% {
+                stroke-dashoffset: 800;
+                opacity: 0.1;
+            }
+        }
+
+        /* typing effect: tiny text lines that appear */
+        .typing-wave {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: typingFlash 5s infinite;
+        }
+
+        @keyframes typingFlash {
+            0%, 30% { stroke-dashoffset: 100; opacity: 0; }
+            45% { stroke-dashoffset: 0; opacity: 0.9; }
+            70% { stroke-dashoffset: 0; opacity: 0.9; }
+            85% { stroke-dashoffset: 100; opacity: 0.2; }
+            100% { stroke-dashoffset: 100; opacity: 0; }
+        }
+
+        /* finger tapping hint */
+        .tap-glow {
+            animation: tapPulse 5s infinite;
+        }
+
+        @keyframes tapPulse {
+            0%, 35% { opacity: 0; }
+            50% { opacity: 0.9; }
+            65% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        /* reduce motion if requested */
+        @media (prefers-reduced-motion: reduce) {
+            .draw-line, .typing-wave, .tap-glow {
+                animation: none;
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="robot-container">
+        <svg class="robot-svg" viewBox="0 0 600 550" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="robotStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#8effc0" />
+                    <stop offset="50%" stop-color="#50e09a" />
+                    <stop offset="100%" stop-color="#30b87a" />
+                </linearGradient>
+            </defs>
+
+            <!-- ===== ROBOT HEAD ===== -->
+            <!-- main head shape (rounded rectangle) -->
+            <rect class="draw-line robot-head" x="220" y="50" width="160" height="120" rx="20" ry="20" stroke="url(#robotStroke)" />
+            
+            <!-- ===== EYES (dual circular displays) ===== -->
+            <circle class="draw-line robot-eyes" cx="265" cy="95" r="18" stroke="url(#robotStroke)" />
+            <circle class="draw-line robot-eyes" cx="335" cy="95" r="18" stroke="url(#robotStroke)" />
+            <!-- eye pupils (inner circles) -->
+            <circle class="draw-line robot-eyes" cx="265" cy="95" r="8" stroke="url(#robotStroke)" stroke-width="2.5" />
+            <circle class="draw-line robot-eyes" cx="335" cy="95" r="8" stroke="url(#robotStroke)" stroke-width="2.5" />
+            
+            <!-- ===== MOUTH (digital speaker grille) ===== -->
+            <rect class="draw-line robot-mouth" x="265" y="130" width="70" height="18" rx="5" stroke="url(#robotStroke)" />
+            <!-- mouth horizontal lines -->
+            <line class="draw-line robot-mouth" x1="275" y1="139" x2="325" y2="139" stroke="url(#robotStroke)" stroke-width="2" />
+            
+            <!-- ===== ANTENNAS ===== -->
+            <line class="draw-line robot-antennas" x1="300" y1="50" x2="300" y2="20" stroke="url(#robotStroke)" />
+            <circle class="draw-line robot-antennas" cx="300" cy="16" r="6" stroke="url(#robotStroke)" />
+            <!-- side antenna -->
+            <line class="draw-line robot-antennas" x1="260" y1="52" x2="245" y2="30" stroke="url(#robotStroke)" stroke-width="2.5" />
+            
+            <!-- ===== TORSO (robotic body) ===== -->
+            <rect class="draw-line robot-torso" x="240" y="180" width="120" height="140" rx="12" ry="12" stroke="url(#robotStroke)" />
+            <!-- chest panel detail -->
+            <rect class="draw-line robot-torso" x="265" y="200" width="70" height="40" rx="6" stroke="url(#robotStroke)" stroke-width="2" />
+            <!-- chest buttons -->
+            <circle class="draw-line robot-torso" cx="280" cy="220" r="5" stroke="url(#robotStroke)" stroke-width="2" />
+            <circle class="draw-line robot-torso" cx="300" cy="220" r="5" stroke="url(#robotStroke)" stroke-width="2" />
+            <circle class="draw-line robot-torso" cx="320" cy="220" r="5" stroke="url(#robotStroke)" stroke-width="2" />
+            
+            <!-- ===== ARMS (mechanical joints) ===== -->
+            <!-- left arm -->
+            <path class="draw-line robot-arms" d="M240 210 L195 240 L195 300 L170 320" stroke="url(#robotStroke)" />
+            <!-- right arm (reaching toward keyboard) -->
+            <path class="draw-line robot-arms" d="M360 210 L405 240 L405 310 L430 340" stroke="url(#robotStroke)" />
+            
+            <!-- ===== FINGERS / typing hands (detailed) ===== -->
+            <!-- right hand fingers -->
+            <line class="draw-line robot-fingers" x1="430" y1="340" x2="440" y2="355" stroke="url(#robotStroke)" stroke-width="2.2" />
+            <line class="draw-line robot-fingers" x1="435" y1="345" x2="448" y2="358" stroke="url(#robotStroke)" stroke-width="2.2" />
+            <line class="draw-line robot-fingers" x1="440" y1="350" x2="455" y2="360" stroke="url(#robotStroke)" stroke-width="2.2" />
+            <!-- left hand resting -->
+            <line class="draw-line robot-fingers" x1="170" y1="320" x2="158" y2="335" stroke="url(#robotStroke)" stroke-width="2.2" />
+            <line class="draw-line robot-fingers" x1="165" y1="325" x2="150" y2="338" stroke="url(#robotStroke)" stroke-width="2.2" />
+            
+            <!-- ===== KEYBOARD (typewriter style) ===== -->
+            <rect class="draw-line robot-keyboard" x="380" y="370" width="180" height="70" rx="8" stroke="url(#robotStroke)" stroke-width="2.5" />
+            <!-- keyboard keys (row of small rectangles) -->
+            <line class="draw-line key-stroke" x1="395" y1="385" x2="545" y2="385" stroke="url(#robotStroke)" stroke-width="1.8" />
+            <line class="draw-line key-stroke" x1="395" y1="395" x2="545" y2="395" stroke="url(#robotStroke)" stroke-width="1.8" />
+            <line class="draw-line key-stroke" x1="395" y1="405" x2="545" y2="405" stroke="url(#robotStroke)" stroke-width="1.8" />
+            <line class="draw-line key-stroke" x1="395" y1="415" x2="545" y2="415" stroke="url(#robotStroke)" stroke-width="1.8" />
+            <!-- vertical key separators -->
+            <line class="draw-line key-stroke" x1="420" y1="380" x2="420" y2="425" stroke="url(#robotStroke)" stroke-width="1.5" />
+            <line class="draw-line key-stroke" x1="450" y1="380" x2="450" y2="425" stroke="url(#robotStroke)" stroke-width="1.5" />
+            <line class="draw-line key-stroke" x1="480" y1="380" x2="480" y2="425" stroke="url(#robotStroke)" stroke-width="1.5" />
+            <line class="draw-line key-stroke" x1="510" y1="380" x2="510" y2="425" stroke="url(#robotStroke)" stroke-width="1.5" />
+            <line class="draw-line key-stroke" x1="535" y1="380" x2="535" y2="425" stroke="url(#robotStroke)" stroke-width="1.5" />
+            
+            <!-- ===== TYPING EFFECT (emitted text waves) ===== -->
+            <path class="draw-line typing-wave" d="M460 365 C465 355, 470 350, 475 340" stroke="#70ffb0" stroke-width="2" />
+            <path class="draw-line typing-wave" d="M480 365 C485 352, 490 345, 495 335" stroke="#70ffb0" stroke-width="2" />
+            <path class="draw-line typing-wave" d="M500 365 C505 355, 510 348, 515 338" stroke="#70ffb0" stroke-width="2" />
+            
+            <!-- small code/document lines floating (typing result) -->
+            <line class="draw-line typing-wave" x1="465" y1="342" x2="485" y2="342" stroke="#a0ffd0" stroke-width="1.8" />
+            <line class="draw-line typing-wave" x1="480" y1="332" x2="505" y2="332" stroke="#a0ffd0" stroke-width="1.8" />
+            
+            <!-- ===== SPARK / TYPING GLOW on keys ===== -->
+            <circle class="draw-line spark-detail" cx="430" cy="390" r="4" stroke="#ffffaa" stroke-width="2" fill="none" />
+            <circle class="draw-line spark-detail" cx="510" cy="400" r="3.5" stroke="#ffffaa" stroke-width="2" />
+            
+            <!-- finger tap highlight (dynamic opacity) -->
+            <circle cx="440" cy="355" r="6" fill="none" stroke="#c0ff70" stroke-width="2" class="tap-glow" />
+        </svg>
+    </div>
+</body>
+</html>
