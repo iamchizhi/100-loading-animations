@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Swinging Pendulum | Pure Line Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f2efe9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: system-ui, 'Segoe UI', monospace;
+        }
+
+        /* container — only the pendulum matters */
+        .pendulum-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .pendulum-svg {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+        }
+
+        /* static support elements (fixed mount) */
+        .fixed-stroke {
+            fill: none;
+            stroke: #4a3320;
+            stroke-width: 3.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* swinging group: rotates around pivot point */
+        .pendulum-group {
+            transform-origin: 200px 80px;
+            animation: swing 2.2s ease-in-out infinite;
+            will-change: transform;
+        }
+
+        /* smooth pendulum arc */
+        @keyframes swing {
+            0% {
+                transform: rotate(-24deg);
+            }
+            50% {
+                transform: rotate(24deg);
+            }
+            100% {
+                transform: rotate(-24deg);
+            }
+        }
+
+        /* optional subtle ground reference (barely visible) */
+        .ground-line {
+            stroke: #c2b19b;
+            stroke-width: 1.5;
+            stroke-dasharray: 6 5;
+            opacity: 0.4;
+        }
+
+        /* reduce motion if requested */
+        @media (prefers-reduced-motion: reduce) {
+            .pendulum-group {
+                animation: none;
+                transform: rotate(0deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pendulum-wrapper">
+        <svg class="pendulum-svg" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+            <!-- ===== FIXED MOUNT (does not swing) ===== -->
+            <!-- horizontal support beam -->
+            <line class="fixed-stroke" x1="155" y1="80" x2="245" y2="80" />
+            <!-- pivot cap (tiny circle) -->
+            <circle class="fixed-stroke" cx="200" cy="80" r="5" />
+            <!-- small vertical bracket detail -->
+            <line class="fixed-stroke" x1="200" y1="68" x2="200" y2="80" stroke-width="2.5" />
+
+            <!-- ===== SWINGING PENDULUM (rod + bob) ===== -->
+            <g class="pendulum-group">
+                <!-- pendulum rod -->
+                <line class="fixed-stroke" x1="200" y1="80" x2="200" y2="280" stroke-width="3" />
+                <!-- pendulum bob (circular weight) -->
+                <circle class="fixed-stroke" cx="200" cy="280" r="26" stroke-width="3" />
+                <!-- inner detail line on bob -->
+                <line class="fixed-stroke" x1="186" y1="280" x2="214" y2="280" stroke-width="2.2" />
+                <!-- tiny inner circle accent -->
+                <circle class="fixed-stroke" cx="200" cy="280" r="9" stroke-width="1.8" stroke-dasharray="12 6" />
+            </g>
+
+            <!-- subtle static ground reference line (optional) -->
+            <line class="ground-line" x1="178" y1="385" x2="222" y2="385" />
+        </svg>
+    </div>
+</body>
+</html>
