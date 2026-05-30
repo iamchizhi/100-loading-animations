@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growing Plant | Line Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5fef7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .plant-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .plant-svg {
+            width: 260px;
+            height: 280px;
+            display: block;
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.05));
+        }
+
+        /* base line drawing style */
+        .grow-line {
+            fill: none;
+            stroke: #2d6a4f;
+            stroke-width: 3.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 600;
+            stroke-dashoffset: 600;
+            animation: drawGrowth 4s cubic-bezier(0.45, 0.05, 0.2, 0.95) infinite;
+        }
+
+        /* individual delays for organic sequence */
+        .stem-line   { animation-delay: 0s; }
+        .leaf-left   { animation-delay: 0.45s; }
+        .leaf-right  { animation-delay: 0.9s; }
+        .leaf-top    { animation-delay: 1.35s; }
+        .leaf-small  { animation-delay: 1.8s; }
+        .pot-outline { animation-delay: 2.25s; }
+        .soil-line   { animation-delay: 2.7s; }
+
+        @keyframes drawGrowth {
+            0% {
+                stroke-dashoffset: 600;
+                stroke-width: 2.8;
+                opacity: 0.2;
+            }
+            12% {
+                stroke-width: 3.6;
+                opacity: 1;
+            }
+            40% {
+                stroke-dashoffset: 0;
+                stroke-width: 3.2;
+                opacity: 1;
+            }
+            75% {
+                stroke-dashoffset: 0;
+                stroke-width: 3.2;
+                opacity: 1;
+            }
+            92% {
+                stroke-dashoffset: 600;
+                stroke-width: 2.8;
+                opacity: 0.4;
+            }
+            100% {
+                stroke-dashoffset: 600;
+                opacity: 0.1;
+            }
+        }
+
+        /* thinner style for soil and extra details */
+        .thin-line {
+            stroke-width: 2.2;
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+        }
+
+        /* reduce motion if user prefers */
+        @media (prefers-reduced-motion: reduce) {
+            .grow-line {
+                animation: none;
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="plant-container">
+        <svg class="plant-svg" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+            <!-- Pot (simple outline) -->
+            <path class="grow-line pot-outline" d="M70 195 L75 225 L125 225 L130 195 Z" stroke="#8b5a2b" />
+            
+            <!-- Soil line inside pot -->
+            <ellipse class="grow-line soil-line thin-line" cx="100" cy="197" rx="24" ry="5" stroke="#6b3e1c" />
+            
+            <!-- Main stem (grows upward) -->
+            <path class="grow-line stem-line" d="M100 195 C98 165 101 135 100 90" stroke="#2d6a4f" />
+            
+            <!-- Left leaf (curves outward) -->
+            <path class="grow-line leaf-left" d="M100 150 C65 138 52 102 92 118" stroke="#40916c" />
+            
+            <!-- Right leaf (mirror) -->
+            <path class="grow-line leaf-right" d="M100 132 C143 120 156 82 108 99" stroke="#40916c" />
+            
+            <!-- Top leaf (crown) -->
+            <path class="grow-line leaf-top" d="M100 87 C72 60 82 28 100 45 C118 28 128 60 100 87" stroke="#2d6a4f" />
+            
+            <!-- Extra small leaf (lower right) -->
+            <path class="grow-line leaf-small" d="M100 170 C128 162 136 135 107 146" stroke="#52b788" />
+            
+            <!-- tiny vein detail on top leaf (optional subtle) -->
+            <path class="grow-line leaf-top" d="M100 45 L100 75" stroke="#74c69d" stroke-width="1.5" stroke-dasharray="200" stroke-dashoffset="200" animation-delay: 1.6s; style="animation: drawGrowth 4s infinite; animation-delay: 1.6s;" />
+        </svg>
+    </div>
+</body>
+</html>
