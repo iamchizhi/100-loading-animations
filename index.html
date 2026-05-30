@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Line Animation Studio | 6 Mesmerizing Motion Experiments</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f7f3ec 0%, #ede5d9 100%);
+            font-family: 'Inter', sans-serif;
+            color: #2c241a;
+            line-height: 1.4;
+            scroll-behavior: smooth;
+        }
+
+        /* animated grain texture (very subtle) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(80, 60, 40, 0.03) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 2rem 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* header section */
+        .hero {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            background: linear-gradient(130deg, #3c2a1f, #846545, #b78d5f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(100, 70, 45, 0.12);
+            backdrop-filter: blur(4px);
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #5a3f28;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(140, 100, 65, 0.2);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #5c4b38;
+            max-width: 650px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        /* grid layout */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0 2rem;
+        }
+
+        /* card styling */
+        .card {
+            background: rgba(255, 252, 245, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            padding: 1.6rem;
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1px solid rgba(230, 210, 180, 0.7);
+            box-shadow: 0 15px 30px -12px rgba(60, 40, 20, 0.12);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 250, 240, 0.9);
+            border-color: rgba(180, 140, 100, 0.4);
+            box-shadow: 0 25px 40px -14px rgba(70, 45, 25, 0.2);
+        }
+
+        /* preview SVG container */
+        .preview {
+            background: rgba(245, 235, 220, 0.5);
+            border-radius: 1.5rem;
+            padding: 1rem;
+            margin-bottom: 1.4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .preview svg {
+            width: 110px;
+            height: 110px;
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+        }
+
+        .card h3 {
+            font-size: 1.65rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            color: #2e241d;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.5rem;
+        }
+
+        .card h3 i {
+            font-size: 1.5rem;
+            color: #b87a4b;
+        }
+
+        .description {
+            color: #6b5a48;
+            font-size: 0.9rem;
+            line-height: 1.45;
+            margin: 0.5rem 0 1.2rem;
+            flex-grow: 1;
+        }
+
+        .tech-tag {
+            display: inline-block;
+            background: #e9e0d3;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #7a5d42;
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+
+        .card-link {
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #2f241b;
+            color: #fef3e4;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            width: fit-content;
+            margin-top: 0.5rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card-link i {
+            font-size: 0.8rem;
+            transition: transform 0.2s;
+        }
+
+        .card-link:hover {
+            background: #4f3824;
+            gap: 12px;
+        }
+
+        .card-link:hover i {
+            transform: translateX(4px);
+        }
+
+        /* footer and readme section */
+        .footer-section {
+            margin-top: 3rem;
+            text-align: center;
+            border-top: 1px solid rgba(140, 110, 80, 0.2);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .readme-link {
+            background: rgba(85, 65, 45, 0.1);
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #5f4530;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .readme-link:hover {
+            background: #dacbb8;
+            color: #2f241b;
+        }
+
+        .credits {
+            color: #8b765d;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 760px) {
+            .container {
+                padding: 1.2rem;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .projects-grid {
+                gap: 1.2rem;
+            }
+            .card {
+                padding: 1.2rem;
+            }
+            .preview svg {
+                width: 85px;
+                height: 85px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+            .card h3 {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* small decorative animation on svg icons on hover */
+        .preview svg .animated-stroke {
+            transition: stroke-dashoffset 0.2s;
+        }
+
+        .card:hover .preview svg .hover-motion {
+            animation: subtlePulse 0.6s ease;
+        }
+
+        @keyframes subtlePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="hero-badge">
+            <i class="fas fa-pen-fancy" style="margin-right: 6px;"></i> line art · frame by frame
+        </div>
+        <h1>line animation studio</h1>
+        <p>Six expressive motion experiments — each crafted with pure stroke-based animation. Watch lines draw, swing, bounce, and unfold.</p>
+    </div>
+
+    <div class="projects-grid">
+        
+        <!-- 001 COFFEE CUP -->
+        <div class="card">
+            <div class="preview">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M32 58 L32 78 C32 84 68 84 68 78 L68 58" stroke="#7A5A42" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                    <path d="M68 63 C80 63 82 72 74 77 C68 80 68 75 68 73" stroke="#7A5A42" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                    <ellipse cx="50" cy="58" rx="18" ry="5" stroke="#9B6E48" stroke-width="2" fill="none"/>
+                    <path d="M40 48 C38 42 44 38 40 32" stroke="#9B6E48" stroke-width="2" stroke-linecap="round" fill="none"/>
+                    <path d="M50 46 C48 39 54 35 50 28" stroke="#9B6E48" stroke-width="2" stroke-linecap="round" fill="none"/>
+                    <path d="M60 48 C58 42 64 38 60 32" stroke="#9B6E48" stroke-width="2" stroke-linecap="round" fill="none"/>
+                    <animate attributeName="opacity" values="1" dur="0.01s" />
+                </svg>
+            </div>
+            <h3><i class="fas fa-mug-hot"></i> 001 coffee cup</h3>
+            <div class="tech-tag"><i class="far fa-clock"></i> line drawing · steam loops</div>
+            <div class="description">
+                A steaming cup drawn stroke by stroke. Elegant handle, warm saucer, and hypnotic wisps of vapor — pure line meditation.
+            </div>
+            <a href="./001%20coffee%20cup/index.html" class="card-link" target="_blank">
+                experience animation <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <!-- 002 GROWING PLANT -->
+        <div class="card">
+            <div class="preview">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 85 L50 60" stroke="#517A48" stroke-width="2.8" stroke-linecap="round"/>
+                    <path d="M50 70 C38 64 35 52 48 58" stroke="#517A48" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M50 65 C64 59 67 46 52 52" stroke="#517A48" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M50 50 C38 38 44 26 50 38 C56 26 62 38 50 50" stroke="#3F7A44" stroke-width="2.5" stroke-linecap="round"/>
+                    <circle cx="50" cy="38" r="2" fill="#C2D93B" opacity="0.8"/>
+                </svg>
+            </div>
+            <h3><i class="fas fa-seedling"></i> 002 growing plant</h3>
+            <div class="tech-tag"><i class="fas fa-leaf"></i> growth cycle · organic motion</div>
+            <div class="description">
+                A mint plant emerges from soil: stem, leaves, and crown unfurl in a continuous animated loop — pure nature.
+            </div>
+            <a href="./002%20growing%20plant/index.html" class="card-link" target="_blank">
+                experience animation <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <!-- 003 POURING LIQUID -->
+        <div class="card">
+            <div class="preview">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M28 42 L28 70 C28 76 44 76 44 70 L44 42" stroke="#5C6D70" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M44 56 L58 46" stroke="#568C8E" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M58 46 L58 72" stroke="#568C8E" stroke-width="2.2" stroke-linecap="round"/>
+                    <path d="M58 72 C58 78 74 78 74 72 L74 52" stroke="#568C8E" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M50 46 L62 38" stroke="#568C8E" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 2"/>
+                    <circle cx="66" cy="44" r="1.5" fill="#7CABB0" opacity="0.6"/>
+                </svg>
+            </div>
+            <h3><i class="fas fa-tint"></i> 003 pouring liquid</h3>
+            <div class="tech-tag"><i class="fas fa-water"></i> fluid dynamics · stream line</div>
+            <div class="description">
+                A graceful stream of liquid pours from one vessel to another. Fluid strokes capture motion and transparency.
+            </div>
+            <a href="./003%20pouring%20liquid/index.html" class="card-link" target="_blank">
+                experience animation <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <!-- 004 SWINGING PENDULUM -->
+        <div class="card">
+            <div class="preview">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="30" y1="20" x2="70" y2="20" stroke="#785A3A" stroke-width="2.5" stroke-linecap="round"/>
+                    <circle cx="50" cy="20" r="3" stroke="#785A3A" stroke-width="2" fill="none"/>
+                    <g transform="rotate(18 50 20)">
+                        <line x1="50" y1="20" x2="50" y2="60" stroke="#785A3A" stroke-width="2.5" stroke-linecap="round"/>
+                        <circle cx="50" cy="62" r="12" stroke="#8B694A" stroke-width="2.5" fill="none"/>
+                        <line x1="44" y1="62" x2="56" y2="62" stroke="#8B694A" stroke-width="2"/>
+                    </g>
+                </svg>
+            </div>
+            <h3><i class="fas fa-clock"></i> 004 swinging pendulum</h3>
+            <div class="tech-tag"><i class="fas fa-chart-line"></i> harmonic motion · physics</div>
+            <div class="description">
+                Classic pendulum with a rhythmic swing. The bob arcs gracefully, showcasing timeless mechanical elegance.
+            </div>
+            <a href="./004%20swinging%20pendulum/index.html" class="card-link" target="_blank">
+                experience animation <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <!-- 005 BOUNCING BASKETBALL -->
+        <div class="card">
+            <div class="preview">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="42" r="14" stroke="#C27E3A" stroke-width="2.5" fill="none"/>
+                    <path d="M38 46 C44 54 56 54 62 46" stroke="#C27E3A" stroke-width="2" fill="none"/>
+                    <path d="M44 36 L56 48" stroke="#C27E3A" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M56 36 L44 48" stroke="#C27E3A" stroke-width="2" stroke-linecap="round"/>
+                    <ellipse cx="50" cy="74" rx="12" ry="3" stroke="#B48C5C" stroke-width="1.8" stroke-dasharray="3 2" fill="none"/>
+                </svg>
+            </div>
+            <h3><i class="fas fa-basketball-ball"></i> 005 bouncing basketball</h3>
+            <div class="tech-tag"><i class="fas fa-arrow-down"></i> elastic bounce · trajectory</div>
+            <div class="description">
+                A basketball rhythmically hits the ground, compressing and springing back with convincing squash & stretch.
+            </div>
+            <a href="./005%20bouncing%20basketball/index.html" class="card-link" target="_blank">
+                experience animation <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <!-- 006 TYPING ROBOT -->
+        <div class="card">
+            <div class="preview">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="28" y="38" width="44" height="32" rx="8" stroke="#536878" stroke-width="2.5" fill="none"/>
+                    <circle cx="40" cy="52" r="3.5" stroke="#536878" stroke-width="2" fill="none"/>
+                    <circle cx="60" cy="52" r="3.5" stroke="#536878" stroke-width="2" fill="none"/>
+                    <path d="M42 66 L58 66" stroke="#536878" stroke-width="2" stroke-linecap="round"/>
+                    <rect x="35" y="72" width="30" height="6" rx="2" stroke="#536878" stroke-width="1.8" fill="none"/>
+                    <line x1="68" y1="46" x2="78" y2="44" stroke="#859BA6" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="68" y1="52" x2="80" y2="52" stroke="#859BA6" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="68" y1="58" x2="78" y2="60" stroke="#859BA6" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h3><i class="fas fa-robot"></i> 006 typing robot</h3>
+            <div class="tech-tag"><i class="fas fa-keyboard"></i> retro-future · keystroke dance</div>
+            <div class="description">
+                A cute robot types on a tiny keyboard, keys moving in sequence. Mechanical charm meets line animation.
+            </div>
+            <a href="./006%20typing%20robot/index.html" class="card-link" target="_blank">
+                experience animation <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-section">
+        <a href="./README.md" class="readme-link" target="_blank">
+            <i class="fas fa-book-open"></i> project README
+        </a>
+        <div class="credits">
+            <i class="fas fa-pen-ruler"></i> six line animations · pure CSS + JS · stroke obsession
+        </div>
+        <div class="credits">
+            ⚡ each demo uses SVG & keyframe drawing
+        </div>
+    </div>
+</div>
+</body>
+</html>
