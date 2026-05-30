@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line Art Coffee Cup | Pure Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f7f1e8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: system-ui, 'Segoe UI', monospace;
+        }
+
+        /* minimalist container — only the cup matters */
+        .animation-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .coffee-svg {
+            width: 280px;
+            height: 280px;
+            display: block;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.05));
+        }
+
+        /* base stroke style: pure line animation */
+        .draw-line {
+            fill: none;
+            stroke: #6b3e1c;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 600;
+            stroke-dashoffset: 600;
+            animation: drawSequence 4s cubic-bezier(0.5, 0.02, 0.2, 0.98) infinite;
+        }
+
+        /* individual delays for a natural drawing order */
+        .saucer-path   { animation-delay: 0s; }
+        .cup-body      { animation-delay: 0.4s; }
+        .cup-handle    { animation-delay: 0.9s; }
+        .coffee-surface{ animation-delay: 1.3s; }
+        .steam-1       { animation-delay: 1.8s; }
+        .steam-2       { animation-delay: 2.1s; }
+        .steam-3       { animation-delay: 2.5s; }
+        .bean-detail   { animation-delay: 3.0s; }
+
+        /* draw → hold → gently erase (loop) */
+        @keyframes drawSequence {
+            0% {
+                stroke-dashoffset: 600;
+                stroke-width: 2.8;
+                opacity: 0.2;
+            }
+            10% {
+                stroke-width: 3.4;
+                opacity: 1;
+            }
+            35% {
+                stroke-dashoffset: 0;
+                stroke-width: 3;
+                opacity: 1;
+            }
+            70% {
+                stroke-dashoffset: 0;
+                stroke-width: 3;
+                opacity: 1;
+            }
+            90% {
+                stroke-dashoffset: 600;
+                stroke-width: 2.8;
+                opacity: 0.4;
+            }
+            100% {
+                stroke-dashoffset: 600;
+                opacity: 0.1;
+            }
+        }
+
+        /* steam uses thinner stroke & slightly softer curve */
+        .steam-line {
+            stroke-width: 2.5;
+            stroke: #a56e3e;
+            animation: drawSteam 4s cubic-bezier(0.5, 0.02, 0.2, 0.98) infinite;
+        }
+
+        @keyframes drawSteam {
+            0% {
+                stroke-dashoffset: 300;
+                stroke-width: 2;
+                opacity: 0;
+            }
+            20% {
+                stroke-width: 2.6;
+                opacity: 0.9;
+            }
+            45% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+            75% {
+                stroke-dashoffset: 0;
+                opacity: 0.8;
+            }
+            95% {
+                stroke-dashoffset: 300;
+                stroke-width: 2;
+                opacity: 0.2;
+            }
+            100% {
+                stroke-dashoffset: 300;
+                opacity: 0;
+            }
+        }
+
+        /* reduce motion if user prefers */
+        @media (prefers-reduced-motion: reduce) {
+            .draw-line, .steam-line {
+                animation: none;
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animation-container">
+        <svg class="coffee-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Saucer (bottom plate) -->
+            <ellipse class="draw-line saucer-path" cx="100" cy="160" rx="52" ry="12" stroke="#6b3e1c" />
+            
+            <!-- Cup body -->
+            <path class="draw-line cup-body" d="M68 90 L68 145 C68 158, 132 158, 132 145 L132 90" stroke="#6b3e1c" />
+            
+            <!-- Cup handle -->
+            <path class="draw-line cup-handle" d="M132 105 C152 105, 158 125, 146 138 C138 146, 132 140, 132 135" stroke="#6b3e1c" />
+            
+            <!-- Coffee liquid surface (ellipse inside cup) -->
+            <ellipse class="draw-line coffee-surface" cx="100" cy="92" rx="30" ry="7" stroke="#7b4a26" />
+            
+            <!-- Steam wisp 1 (left) -->
+            <path class="draw-line steam-1 steam-line" d="M82 76 C78 65, 86 58, 82 47" stroke="#a56e3e" />
+            
+            <!-- Steam wisp 2 (center, taller) -->
+            <path class="draw-line steam-2 steam-line" d="M98 72 C94 60, 102 50, 98 38" stroke="#a56e3e" />
+            
+            <!-- Steam wisp 3 (right) -->
+            <path class="draw-line steam-3 steam-line" d="M116 76 C112 64, 118 56, 114 44" stroke="#a56e3e" />
+            
+            <!-- Tiny extra detail: floating coffee bean (just for charm) -->
+            <path class="draw-line bean-detail" d="M155 152 C160 148, 162 153, 158 156" stroke="#5a341a" stroke-width="2.2" />
+        </svg>
+    </div>
+</body>
+</html>
