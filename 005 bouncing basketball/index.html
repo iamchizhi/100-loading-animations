@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Bouncing Basketball | Line Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #ebe3d5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .basketball-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .basketball-svg {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.1));
+        }
+
+        /* all lines: stroke-based drawing */
+        .ball-stroke {
+            fill: none;
+            stroke: #2c1a0e;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* outer circle */
+        .ball-outline {
+            stroke-width: 3.5;
+        }
+
+        /* seam lines (curved) */
+        .seam {
+            stroke-width: 2.8;
+        }
+
+        /* shadow line on ground */
+        .shadow-line {
+            stroke: #9b8a74;
+            stroke-width: 2;
+            stroke-dasharray: 4 3;
+            opacity: 0.6;
+        }
+
+        /* bouncing group: translation + squash/stretch */
+        .ball-group {
+            transform-origin: 200px 260px;
+            animation: bounceTranslate 1.2s cubic-bezier(0.45, 1.1, 0.55, 1) infinite;
+        }
+
+        /* squash effect on impact */
+        .ball-shape {
+            transform-origin: 200px 260px;
+            animation: squashStretch 1.2s ease-in-out infinite;
+        }
+
+        @keyframes bounceTranslate {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            45% {
+                transform: translateY(-90px);
+            }
+            85% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes squashStretch {
+            0%, 100% {
+                transform: scale(1, 1);
+            }
+            15% {
+                transform: scale(1.03, 0.97);
+            }
+            85% {
+                transform: scale(1, 1);
+            }
+            92% {
+                transform: scale(1.06, 0.94);
+            }
+        }
+
+        /* optional subtle ground line */
+        .ground {
+            stroke: #b8a589;
+            stroke-width: 1.8;
+            stroke-dasharray: 8 5;
+            opacity: 0.5;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .ball-group, .ball-shape {
+                animation: none;
+                transform: translateY(0) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="basketball-container">
+        <svg class="basketball-svg" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+            <!-- static ground reference line -->
+            <line class="ground" x1="140" y1="380" x2="260" y2="380" />
+
+            <!-- bouncing basketball group -->
+            <g class="ball-group">
+                <!-- squash/stretch wrapper (affects the ball geometry) -->
+                <g class="ball-shape">
+                    <!-- outer circle (basketball outline) -->
+                    <circle class="ball-stroke ball-outline" cx="200" cy="260" r="48" />
+                    
+                    <!-- vertical curved seam (left side) -->
+                    <path class="ball-stroke seam" d="M200 212 C180 230, 180 290, 200 308" />
+                    
+                    <!-- horizontal curved seam (top to right) -->
+                    <path class="ball-stroke seam" d="M152 260 C170 240, 230 240, 248 260" />
+                    
+                    <!-- opposite diagonal seam (for typical basketball look) -->
+                    <path class="ball-stroke seam" d="M200 212 C220 230, 220 290, 200 308" />
+                    
+                    <!-- small line detail on the side -->
+                    <path class="ball-stroke seam" d="M248 260 C230 280, 170 280, 152 260" stroke-width="2.5" />
+                    
+                    <!-- tiny highlight stroke (top left shine) -->
+                    <path class="ball-stroke" d="M172 224 C178 218, 188 216, 194 218" stroke-width="2" opacity="0.6" />
+                </g>
+            </g>
+
+            <!-- bouncing shadow (moves with the ball's lowest point) -->
+            <ellipse class="shadow-line" cx="200" cy="382" rx="28" ry="5" fill="none">
+                <animate attributeName="rx" values="28;22;28" dur="1.2s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.6;0.3;0.6" dur="1.2s" repeatCount="indefinite" />
+            </ellipse>
+        </svg>
+    </div>
+</body>
+</html>
