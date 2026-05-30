@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Rotating Globe | Pure Line Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #eef2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: system-ui, 'Segoe UI', monospace;
+        }
+
+        .globe-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .globe-svg {
+            width: 100%;
+            max-width: 550px;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08));
+        }
+
+        /* all lines share the same clean stroke style */
+        .globe-line {
+            fill: none;
+            stroke: #2c4c6e;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* equator gets slightly thicker for emphasis */
+        .equator {
+            stroke-width: 2.8;
+            stroke: #1e5a7a;
+        }
+
+        /* continent outline - slightly different tone */
+        .continent {
+            stroke: #3a6b47;
+            stroke-width: 2.4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* axis line (subtle) */
+        .axis {
+            stroke: #8faaae;
+            stroke-width: 1.5;
+            stroke-dasharray: 5 4;
+        }
+
+        /* rotating group: spins continuously around center */
+        .globe-spin {
+            transform-origin: 200px 200px;
+            animation: rotateGlobe 12s linear infinite;
+            will-change: transform;
+        }
+
+        @keyframes rotateGlobe {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* reduce motion if user prefers */
+        @media (prefers-reduced-motion: reduce) {
+            .globe-spin {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="globe-wrapper">
+        <svg class="globe-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <!-- ===== ROTATING GROUP ===== -->
+            <g class="globe-spin">
+                
+                <!-- Axis line (tilted, through poles) -->
+                <line class="globe-line axis" x1="200" y1="55" x2="200" y2="345" />
+                
+                <!-- OUTER CIRCLE (equator & globe boundary) -->
+                <circle class="globe-line equator" cx="200" cy="200" r="145" />
+                
+                <!-- === MERIDIANS (longitude lines) === -->
+                <!-- central meridian (vertical line) -->
+                <line class="globe-line" x1="200" y1="55" x2="200" y2="345" stroke-width="1.8" />
+                
+                <!-- curved meridians using elliptical arcs -->
+                <!-- left meridian 1 -->
+                <path class="globe-line" d="M200 55 C130 100, 130 300, 200 345" />
+                <!-- right meridian 1 -->
+                <path class="globe-line" d="M200 55 C270 100, 270 300, 200 345" />
+                
+                <!-- left meridian 2 (steeper curve) -->
+                <path class="globe-line" d="M200 55 C90 120, 90 280, 200 345" stroke-width="1.6" />
+                <!-- right meridian 2 -->
+                <path class="globe-line" d="M200 55 C310 120, 310 280, 200 345" stroke-width="1.6" />
+                
+                <!-- === LATITUDE CIRCLES (ellipses) === -->
+                <!-- Tropic of Cancer (north) -->
+                <ellipse class="globe-line" cx="200" cy="140" rx="125" ry="28" stroke-width="1.6" />
+                <!-- Tropic of Capricorn (south) -->
+                <ellipse class="globe-line" cx="200" cy="260" rx="125" ry="28" stroke-width="1.6" />
+                <!-- Arctic circle (far north) -->
+                <ellipse class="globe-line" cx="200" cy="90" rx="80" ry="16" stroke-width="1.4" />
+                <!-- Antarctic circle (far south) -->
+                <ellipse class="globe-line" cx="200" cy="310" rx="80" ry="16" stroke-width="1.4" />
+                
+                <!-- === STYLIZED CONTINENT OUTLINE (realistic abstract) === -->
+                <!-- A continuous path that hints at Eurasia/Africa/Americas -->
+                <path class="continent" d="
+                    M 155 115 
+                    C 165 108, 178 112, 185 120
+                    C 192 128, 195 140, 188 148
+                    C 180 156, 170 152, 162 158
+                    C 150 168, 142 178, 148 188
+                    C 155 198, 168 195, 178 200
+                    C 190 206, 198 215, 192 228
+                    C 185 240, 170 245, 158 240
+                    C 145 235, 138 222, 142 210
+                    C 148 195, 160 190, 165 178
+                    C 170 166, 160 155, 152 148
+                    C 140 138, 135 125, 145 115
+                    Z
+                " />
+                <!-- Second landmass (Americas style) -->
+                <path class="continent" d="
+                    M 240 130
+                    C 252 125, 262 135, 268 148
+                    C 275 162, 272 178, 262 188
+                    C 252 198, 240 195, 235 185
+                    C 228 172, 232 158, 238 148
+                    C 242 140, 238 132, 240 130
+                    Z
+                " />
+                <!-- Smaller landmass (Australia-like) -->
+                <path class="continent" d="
+                    M 260 250
+                    C 270 245, 278 252, 275 262
+                    C 272 272, 262 275, 255 268
+                    C 248 260, 252 252, 260 250
+                    Z
+                " />
+                
+                <!-- subtle dotted equator guide (inner decorative) -->
+                <circle class="globe-line equator" cx="200" cy="200" r="145" stroke-dasharray="8 10" stroke-width="1.2" opacity="0.4" />
+                
+                <!-- tiny pole markers -->
+                <circle cx="200" cy="55" r="3" fill="#4a6a7e" stroke="none" />
+                <circle cx="200" cy="345" r="3" fill="#4a6a7e" stroke="none" />
+            </g>
+        </svg>
+    </div>
+</body>
+</html>
