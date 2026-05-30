@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Origami Crane | Unfolding Line Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f0e8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .origami-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .origami-svg {
+            width: 100%;
+            max-width: 520px;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.05));
+        }
+
+        /* all line strokes — pure drawing animation */
+        .fold-line {
+            fill: none;
+            stroke: #3a2a1f;
+            stroke-width: 2.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: drawFold 4.2s cubic-bezier(0.45, 0.05, 0.2, 0.95) infinite;
+        }
+
+        /* individual delays for sequential unfolding */
+        .body-main   { animation-delay: 0s; }
+        .body-diag   { animation-delay: 0.35s; }
+        .wing-left   { animation-delay: 0.8s; }
+        .wing-right  { animation-delay: 1.2s; }
+        .head        { animation-delay: 1.65s; }
+        .tail        { animation-delay: 2.05s; }
+        .detail-crane{ animation-delay: 2.45s; }
+        .inner-creases{ animation-delay: 2.85s; }
+
+        @keyframes drawFold {
+            0% {
+                stroke-dashoffset: 400;
+                stroke-width: 2.5;
+                opacity: 0.2;
+            }
+            15% {
+                stroke-width: 3.2;
+                opacity: 1;
+            }
+            40% {
+                stroke-dashoffset: 0;
+                stroke-width: 2.8;
+                opacity: 1;
+            }
+            70% {
+                stroke-dashoffset: 0;
+                stroke-width: 2.8;
+                opacity: 1;
+            }
+            88% {
+                stroke-dashoffset: 400;
+                stroke-width: 2.5;
+                opacity: 0.4;
+            }
+            100% {
+                stroke-dashoffset: 400;
+                opacity: 0.1;
+            }
+        }
+
+        /* thinner lines for inner crease details */
+        .thin-line {
+            stroke-width: 2;
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: drawFoldThin 4.2s cubic-bezier(0.45, 0.05, 0.2, 0.95) infinite;
+        }
+
+        @keyframes drawFoldThin {
+            0% {
+                stroke-dashoffset: 200;
+                stroke-width: 1.6;
+                opacity: 0;
+            }
+            20% {
+                stroke-width: 2;
+                opacity: 0.8;
+            }
+            45% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+            75% {
+                stroke-dashoffset: 0;
+                opacity: 0.8;
+            }
+            95% {
+                stroke-dashoffset: 200;
+                stroke-width: 1.6;
+                opacity: 0.2;
+            }
+            100% {
+                stroke-dashoffset: 200;
+                opacity: 0;
+            }
+        }
+
+        /* optional tiny decorative fold dot */
+        .fold-dot {
+            fill: none;
+            stroke: #8b6948;
+            stroke-width: 1.8;
+            stroke-dasharray: 20;
+            stroke-dashoffset: 20;
+            animation: drawDot 4.2s ease infinite;
+        }
+        @keyframes drawDot {
+            0%, 30% { stroke-dashoffset: 20; opacity: 0; }
+            50% { stroke-dashoffset: 0; opacity: 0.8; }
+            80% { stroke-dashoffset: 0; opacity: 0.6; }
+            100% { stroke-dashoffset: 20; opacity: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fold-line, .thin-line, .fold-dot {
+                animation: none;
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="origami-wrapper">
+        <svg class="origami-svg" viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="paperFold" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#5c3f28" />
+                    <stop offset="50%" stop-color="#8b6948" />
+                    <stop offset="100%" stop-color="#4a3220" />
+                </linearGradient>
+            </defs>
+
+            <!-- ===== ORIGAMI CRANE – UNFOLDING LINE ART ===== -->
+            <!-- Main body triangle (central structure) -->
+            <polygon class="fold-line body-main" points="250,180 180,280 320,280" stroke="url(#paperFold)" />
+            
+            <!-- Diagonal body fold (dividing the crane body) -->
+            <line class="fold-line body-diag" x1="250" y1="180" x2="250" y2="280" stroke="url(#paperFold)" />
+            
+            <!-- Left wing (unfolding outward) -->
+            <polyline class="fold-line wing-left" points="180,280 120,220 160,180 250,180" stroke="url(#paperFold)" />
+            <!-- Left wing inner crease -->
+            <line class="thin-line inner-creases" x1="180" y1="280" x2="160" y2="180" stroke="#9b7a58" />
+            
+            <!-- Right wing (unfolding outward) -->
+            <polyline class="fold-line wing-right" points="320,280 380,220 340,180 250,180" stroke="url(#paperFold)" />
+            <!-- Right wing inner crease -->
+            <line class="thin-line inner-creases" x1="320" y1="280" x2="340" y2="180" stroke="#9b7a58" />
+            
+            <!-- Head (elegant crane beak + neck) -->
+            <polyline class="fold-line head" points="250,180 230,130 210,105 225,95 245,115 250,180" stroke="url(#paperFold)" />
+            <!-- beak split detail -->
+            <line class="thin-line detail-crane" x1="210" y1="105" x2="218" y2="100" stroke="#7a5a3a" />
+            
+            <!-- Tail (pointed fold) -->
+            <polyline class="fold-line tail" points="250,280 270,310 290,295 260,280" stroke="url(#paperFold)" />
+            <!-- tail extra feather line -->
+            <line class="thin-line detail-crane" x1="270" y1="310" x2="285" y2="320" stroke="#7a5a3a" />
+            
+            <!-- Additional wing creases (depth) -->
+            <line class="thin-line inner-creases" x1="120" y1="220" x2="250" y2="180" stroke="#8b6948" />
+            <line class="thin-line inner-creases" x1="380" y1="220" x2="250" y2="180" stroke="#8b6948" />
+            
+            <!-- tiny fold detail on body (origami texture) -->
+            <circle class="fold-dot" cx="250" cy="230" r="3" />
+            
+            <!-- subtle ground shadow line (optional, very light) -->
+            <line class="thin-line" x1="180" y1="350" x2="320" y2="350" stroke="#c4b49f" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.4" style="animation: drawFoldThin 4.2s infinite; animation-delay: 3.2s;" />
+        </svg>
+    </div>
+</body>
+</html>
