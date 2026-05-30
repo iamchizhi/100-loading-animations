@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Pouring Liquid | Line Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #1a1e24;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: system-ui, 'Segoe UI', monospace;
+        }
+
+        /* pure focus: no text, just the animation */
+        .animation-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .liquid-svg {
+            width: 400px;
+            height: 400px;
+            display: block;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+        }
+
+        /* base drawing style for all lines */
+        .draw-line {
+            fill: none;
+            stroke: #60c0ff;
+            stroke-width: 2.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 600;
+            stroke-dashoffset: 600;
+            animation: drawPour 4.2s cubic-bezier(0.55, 0.06, 0.25, 0.94) infinite;
+        }
+
+        /* thicker main stream for realism */
+        .stream-main {
+            stroke-width: 3.5;
+            stroke: #3ea5e8;
+        }
+
+        /* droplets & smaller splashes */
+        .droplet {
+            stroke-width: 2.2;
+            stroke: #7ad0ff;
+        }
+
+        /* individual delays for sequential fluid flow */
+        .spout-line   { animation-delay: 0s; }
+        .stream-1     { animation-delay: 0.25s; }
+        .stream-2     { animation-delay: 0.55s; }
+        .stream-3     { animation-delay: 0.85s; }
+        .splash-left  { animation-delay: 1.2s; }
+        .splash-right { animation-delay: 1.45s; }
+        .droplet-1    { animation-delay: 1.7s; }
+        .droplet-2    { animation-delay: 2.0s; }
+        .droplet-3    { animation-delay: 2.3s; }
+        .surface-ripple { animation-delay: 2.6s; }
+        .secondary-stream { animation-delay: 1.05s; }
+
+        /* keyframes: draw, hold, then gently fade/retract to simulate continuous pour */
+        @keyframes drawPour {
+            0% {
+                stroke-dashoffset: 600;
+                stroke-width: 2.5;
+                opacity: 0.2;
+            }
+            12% {
+                stroke-width: 3.2;
+                opacity: 1;
+            }
+            35% {
+                stroke-dashoffset: 0;
+                stroke-width: 2.8;
+                opacity: 1;
+            }
+            70% {
+                stroke-dashoffset: 0;
+                stroke-width: 2.8;
+                opacity: 1;
+            }
+            88% {
+                stroke-dashoffset: 600;
+                stroke-width: 2.4;
+                opacity: 0.5;
+            }
+            100% {
+                stroke-dashoffset: 600;
+                opacity: 0.15;
+            }
+        }
+
+        /* faster subtle animation for ripples (surface disturbance) */
+        .ripple-line {
+            stroke-width: 2;
+            stroke: #88d4ff;
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: ripplePulse 3.6s ease-in-out infinite;
+        }
+
+        @keyframes ripplePulse {
+            0% {
+                stroke-dashoffset: 200;
+                opacity: 0;
+            }
+            20% {
+                stroke-dashoffset: 0;
+                opacity: 0.9;
+            }
+            70% {
+                stroke-dashoffset: 0;
+                opacity: 0.6;
+            }
+            100% {
+                stroke-dashoffset: 200;
+                opacity: 0;
+            }
+        }
+
+        /* specialized slower animation for droplets (falling effect) */
+        .droplet-line {
+            animation: dropletFall 3.8s cubic-bezier(0.45, 0.9, 0.2, 1) infinite;
+        }
+
+        @keyframes dropletFall {
+            0% {
+                stroke-dashoffset: 200;
+                stroke-width: 2;
+                opacity: 0;
+            }
+            15% {
+                stroke-width: 2.6;
+                opacity: 1;
+            }
+            40% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        75% {
+                stroke-dashoffset: 0;
+                opacity: 0.8;
+            }
+            100% {
+                stroke-dashoffset: 200;
+                stroke-width: 1.8;
+                opacity: 0;
+            }
+        }
+
+        /* reduce motion if user prefers */
+        @media (prefers-reduced-motion: reduce) {
+            .draw-line, .ripple-line, .droplet-line {
+                animation: none;
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        /* subtle background glow to emphasize liquid */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 40% 50%, rgba(96, 192, 255, 0.08), transparent 70%);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="animation-wrapper">
+        <svg class="liquid-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <!-- Spout / pouring origin (teapot or pitcher lip) -->
+            <path class="draw-line spout-line" d="M185 82 C195 78, 210 80, 218 86" stroke="#60c0ff" />
+            
+            <!-- Main pouring stream (thick, continuous arc) -->
+            <path class="draw-line stream-1 stream-main" d="M218 86 C230 100, 240 130, 238 168" stroke="#3ea5e8" />
+            <path class="draw-line stream-2 stream-main" d="M238 168 C236 200, 226 228, 215 252" stroke="#3ea5e8" />
+            
+            <!-- Secondary stream (slight split, realism) -->
+            <path class="draw-line secondary-stream" d="M215 86 C225 108, 222 142, 220 174 C218 200, 210 222, 204 245" stroke="#60c0ff" stroke-width="2.4" />
+            
+            <!-- Third stream (thinner, wavy for fluid dynamics) -->
+            <path class="draw-line stream-3" d="M224 90 C236 118, 242 152, 232 192 C224 224, 212 244, 200 260" stroke="#7ad0ff" stroke-width="2.5" />
+            
+            <!-- Splash / impact on receiving surface (left side) -->
+            <path class="draw-line splash-left" d="M200 260 C190 268, 178 274, 168 272" stroke="#60c0ff" stroke-width="2.2" />
+            <path class="draw-line splash-right" d="M200 260 C212 270, 224 276, 236 273" stroke="#60c0ff" stroke-width="2.2" />
+            
+            <!-- Surface ripples (ellipses on bottom pool / liquid surface) -->
+            <ellipse class="ripple-line surface-ripple" cx="200" cy="272" rx="32" ry="8" stroke="#88d4ff" />
+            <ellipse class="ripple-line" cx="200" cy="272" rx="48" ry="12" stroke="#88d4ff" style="animation-delay: 0.9s;" />
+            
+            <!-- Flying droplets (realistic splashes) -->
+            <path class="draw-line droplet-1 droplet-line" d="M172 262 C170 254, 166 248, 169 242" stroke="#7ad0ff" />
+            <path class="draw-line droplet-2 droplet-line" d="M228 258 C232 250, 236 244, 234 238" stroke="#7ad0ff" />
+            <path class="draw-line droplet-3 droplet-line" d="M195 250 C192 244, 190 238, 194 232" stroke="#60c0ff" />
+            
+            <!-- Extra tiny droplets (mid-air) -->
+            <circle cx="165" cy="258" r="2.2" fill="none" stroke="#88d4ff" stroke-width="1.8" stroke-dasharray="100" stroke-dashoffset="100" class="draw-line" style="animation-delay: 1.9s; animation-duration: 3.6s;" />
+            <circle cx="232" cy="253" r="1.8" fill="none" stroke="#88d4ff" stroke-width="1.8" stroke-dasharray="80" stroke-dashoffset="80" class="draw-line" style="animation-delay: 2.2s; animation-duration: 3.8s;" />
+            
+            <!-- subtle thin stream connecting to pool (coalescing) -->
+            <path class="draw-line" d="M206 266 C207 270, 204 274, 200 276" stroke="#60c0ff" stroke-width="2" style="animation-delay: 1.4s;" />
+            
+            <!-- liquid level line inside pool (realistic meniscus) -->
+            <path class="draw-line" d="M168 274 C180 280, 220 280, 232 274" stroke="#3ea5e8" stroke-width="2" style="animation-delay: 2.8s;" />
+        </svg>
+    </div>
+</body>
+</html>
