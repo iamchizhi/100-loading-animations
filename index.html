@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Line Animation Studio | 6 Mesmerizing Motion Experiments</title>
-    <!-- Google Fonts & Font Awesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <title>Motion Atlas | Animation Showcase</title>
+    <!-- Google Fonts: modern, clean typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (free icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -15,427 +16,590 @@
         }
 
         body {
-            background: linear-gradient(145deg, #f7f3ec 0%, #ede5d9 100%);
+            background: linear-gradient(145deg, #f9fafc 0%, #eff2f8 100%);
             font-family: 'Inter', sans-serif;
-            color: #2c241a;
-            line-height: 1.4;
+            color: #1a2c3e;
             scroll-behavior: smooth;
         }
 
-        /* animated grain texture (very subtle) */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(rgba(80, 60, 40, 0.03) 1px, transparent 1px);
-            background-size: 28px 28px;
-            pointer-events: none;
-            z-index: 0;
-        }
-
+        /* global container */
         .container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem 2rem 3rem;
-            position: relative;
-            z-index: 2;
+            padding: 2rem 2rem 4rem;
         }
 
         /* header section */
         .hero {
             text-align: center;
             margin-bottom: 3.5rem;
+            position: relative;
         }
 
         .hero h1 {
-            font-size: 3.2rem;
+            font-size: 3.8rem;
             font-weight: 700;
-            background: linear-gradient(130deg, #3c2a1f, #846545, #b78d5f);
-            background-clip: text;
+            background: linear-gradient(135deg, #1E2F5E, #2a4e77);
             -webkit-background-clip: text;
+            background-clip: text;
             color: transparent;
             letter-spacing: -0.02em;
             margin-bottom: 0.5rem;
         }
 
-        .hero-badge {
+        .hero .badge {
             display: inline-block;
-            background: rgba(100, 70, 45, 0.12);
-            backdrop-filter: blur(4px);
-            padding: 0.25rem 1rem;
+            background: rgba(42, 78, 119, 0.12);
+            backdrop-filter: blur(2px);
+            padding: 0.35rem 1rem;
             border-radius: 40px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 500;
-            color: #5a3f28;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(140, 100, 65, 0.2);
+            color: #1e4a76;
+            margin-bottom: 1.2rem;
+            border: 1px solid rgba(30, 79, 118, 0.2);
         }
 
         .hero p {
-            font-size: 1.2rem;
-            color: #5c4b38;
-            max-width: 650px;
+            max-width: 680px;
             margin: 0 auto;
+            font-size: 1.2rem;
+            color: #2c475e;
             font-weight: 400;
+            line-height: 1.5;
         }
 
-        /* grid layout */
-        .projects-grid {
+        /* grid layout: 3 columns, responsive */
+        .showcase-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 2rem;
-            margin: 2rem 0 2rem;
+            margin-top: 1rem;
         }
 
-        /* card styling */
+        /* card design — glassmorphism + modern shadows */
         .card {
-            background: rgba(255, 252, 245, 0.75);
-            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(0px);
             border-radius: 2rem;
-            padding: 1.6rem;
-            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            border: 1px solid rgba(230, 210, 180, 0.7);
-            box-shadow: 0 15px 30px -12px rgba(60, 40, 20, 0.12);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.35s ease;
+            box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
         .card:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 250, 240, 0.9);
-            border-color: rgba(180, 140, 100, 0.4);
-            box-shadow: 0 25px 40px -14px rgba(70, 45, 25, 0.2);
+            transform: translateY(-6px);
+            box-shadow: 0 24px 40px -12px rgba(0, 20, 40, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(100, 148, 196, 0.3);
         }
 
-        /* preview SVG container */
-        .preview {
-            background: rgba(245, 235, 220, 0.5);
-            border-radius: 1.5rem;
-            padding: 1rem;
-            margin-bottom: 1.4rem;
+        .preview-container {
+            background: #fefefe;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: all 0.2s;
+            min-height: 220px;
+            padding: 1.2rem;
+            border-bottom: 1px solid #eef2f8;
+            transition: background 0.2s;
         }
 
-        .preview svg {
-            width: 110px;
+        /* individual animation frames */
+        .animation-stage {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: transparent;
+        }
+
+        /* ------------------------- */
+        /* 1. COFFEE CUP (steam & wiggle) */
+        .coffee-cup {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            animation: gentleFloat 3s infinite ease-in-out;
+        }
+        .cup-body {
+            position: absolute;
+            bottom: 0;
+            width: 70px;
+            height: 55px;
+            background: #d9ae6c;
+            border-radius: 0 0 20px 20px;
+            left: 10px;
+            box-shadow: 0 6px 0 #b47c44;
+        }
+        .cup-handle {
+            position: absolute;
+            right: -8px;
+            top: 14px;
+            width: 16px;
+            height: 28px;
+            border: 3px solid #b87a47;
+            border-left: none;
+            border-radius: 0 20px 20px 0;
+        }
+        .steam {
+            position: absolute;
+            width: 8px;
+            height: 24px;
+            background: rgba(200, 200, 210, 0.5);
+            border-radius: 50%;
+            top: -18px;
+            left: 32px;
+            filter: blur(3px);
+            animation: steamRise 2.2s infinite;
+        }
+        .steam:nth-child(2) {
+            left: 48px;
+            animation-delay: 0.7s;
+            opacity: 0.6;
+        }
+        @keyframes gentleFloat {
+            0%,100% { transform: translateY(0px) rotate(0deg);}
+            50% { transform: translateY(-3px) rotate(1deg);}
+        }
+        @keyframes steamRise {
+            0% { transform: translateY(0) scale(0.8); opacity: 0.5; }
+            100% { transform: translateY(-28px) scale(1.2); opacity: 0; }
+        }
+
+        /* 2. GROWING PLANT */
+        .plant-pot {
+            position: relative;
+            width: 90px;
+            height: 100px;
+        }
+        .pot {
+            position: absolute;
+            bottom: 0;
+            width: 50px;
+            height: 35px;
+            background: #cb7b3c;
+            left: 20px;
+            border-radius: 0 0 12px 12px;
+        }
+        .stem {
+            position: absolute;
+            bottom: 30px;
+            left: 42px;
+            width: 6px;
+            height: 0px;
+            background: #5f8b4c;
+            transform-origin: bottom;
+            animation: growStem 2s infinite alternate ease-out;
+        }
+        .leaf {
+            position: absolute;
+            width: 16px;
+            height: 10px;
+            background: #6f9e4f;
+            border-radius: 80% 0 60% 40%;
+            bottom: calc(100% - 10px);
+            left: -6px;
+            opacity: 0;
+            animation: leafPop 2s infinite alternate 0.3s;
+        }
+        .leaf2 {
+            left: 6px;
+            transform: scaleX(-1);
+            animation-delay: 0.7s;
+        }
+        @keyframes growStem {
+            0% { height: 0px; opacity: 0;}
+            100% { height: 48px; opacity: 1;}
+        }
+        @keyframes leafPop {
+            0% { opacity: 0; transform: scale(0.6);}
+            100% { opacity: 1; transform: scale(1);}
+        }
+
+        /* 3. POURING LIQUID */
+        .pour-set {
+            position: relative;
+            width: 120px;
+            height: 100px;
+        }
+        .bottle {
+            position: absolute;
+            width: 35px;
+            height: 55px;
+            background: #99b2b7;
+            border-radius: 30% 30% 20% 20%;
+            left: 15px;
+            top: 5px;
+            transform: rotate(-25deg);
+            transform-origin: top right;
+            animation: tiltPour 2.5s infinite ease-in-out;
+        }
+        .drop {
+            position: absolute;
+            width: 8px;
+            height: 14px;
+            background: #6ab0de;
+            border-radius: 50%;
+            left: 44px;
+            top: 42px;
+            opacity: 0;
+            animation: dropFlow 2.5s infinite;
+        }
+        .glass {
+            position: absolute;
+            bottom: 0;
+            right: 5px;
+            width: 38px;
+            height: 48px;
+            border: 3px solid #acd0e8;
+            border-top: 2px solid transparent;
+            border-radius: 0 0 16px 16px;
+            background: rgba(106, 176, 222, 0.1);
+        }
+        @keyframes tiltPour {
+            0%, 100% { transform: rotate(-25deg);}
+            50% { transform: rotate(-50deg);}
+        }
+        @keyframes dropFlow {
+            0% { opacity: 0; transform: translateY(0);}
+            20% { opacity: 0.9;}
+            80% { opacity: 0.8; transform: translateY(28px);}
+            100% { opacity: 0; transform: translateY(38px);}
+        }
+
+        /* 4. SWINGING PENDULUM */
+        .pendulum {
+            width: 100px;
             height: 110px;
-            display: block;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+            position: relative;
+        }
+        .string {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 60px;
+            background: #5a6e7c;
+            transform-origin: top center;
+            animation: swing 1.8s infinite alternate ease-in-out;
+        }
+        .bob {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 22px;
+            height: 22px;
+            background: #e07a5f;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        @keyframes swing {
+            0% { transform: rotate(-32deg);}
+            100% { transform: rotate(32deg);}
         }
 
-        .card h3 {
-            font-size: 1.65rem;
-            font-weight: 600;
-            letter-spacing: -0.3px;
-            color: #2e241d;
+        /* 5. BOUNCING BASKETBALL */
+        .bball {
+            width: 55px;
+            height: 55px;
+            background: radial-gradient(circle at 35% 35%, #e68a2e, #c25d1a);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 0 0 2px #2b1e0e inset;
+            animation: bounceBall 1.2s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+        }
+        .bball:after {
+            content: "🏀";
+            position: absolute;
+            font-size: 28px;
+            left: 12px;
+            top: 10px;
+            opacity: 0.5;
+        }
+        @keyframes bounceBall {
+            0%,100% { transform: translateY(0px);}
+            50% { transform: translateY(-42px) scale(1.02);}
+        }
+
+        /* 6. TYPING ROBOT */
+        .robot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .robot-face {
+            font-size: 3.5rem;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+            animation: typeGlow 1s infinite alternate;
+        }
+        .typing-text {
+            background: #eef3fc;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-top: 8px;
+            font-family: monospace;
+            color: #1f6392;
+            animation: blinkCursor 1s step-end infinite;
+        }
+        @keyframes typeGlow {
+            0% { text-shadow: 0 0 0px #81c3e6;}
+            100% { text-shadow: 0 0 6px #4fa3cf;}
+        }
+        @keyframes blinkCursor {
+            0%,100% { border-right: 2px solid transparent; }
+            50% { border-right: 2px solid #1f6392; }
+        }
+
+        /* 7. UNFOLDING ORIGAMI */
+        .origami {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: foldReveal 3s infinite ease;
+        }
+        .crane {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 50px solid #f7d44a;
+            position: relative;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation: paperSpin 3s infinite;
+        }
+        @keyframes foldReveal {
+            0% { opacity: 0.3; transform: scale(0.7) rotateY(0deg);}
+            50% { opacity: 1; transform: scale(1) rotateY(180deg);}
+            100% { opacity: 1; transform: scale(1) rotateY(360deg);}
+        }
+        @keyframes paperSpin {
+            0%,100% { filter: brightness(1);}
+            50% { filter: brightness(1.2) drop-shadow(0 2px 4px gold);}
+        }
+
+        /* 8. ROTATING GLOBE */
+        .globe {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 30% 30%, #5fa7cf, #1b5170);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: -5px 0 0 rgba(0,0,0,0.1) inset, 2px 4px 12px rgba(0,0,0,0.2);
+            animation: spinGlobe 4s infinite linear;
+        }
+        .globe:after {
+            content: "🌍";
+            position: absolute;
+            font-size: 2rem;
+            left: 20px;
+            top: 18px;
+            opacity: 0.8;
+        }
+        @keyframes spinGlobe {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+
+        /* card info */
+        .card-info {
+            padding: 1.2rem 1.4rem 1.4rem;
+            background: rgba(255,255,240,0.3);
+        }
+        .card-title {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 0.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #1c3d5e;
+            margin-bottom: 0.35rem;
         }
-
-        .card h3 i {
-            font-size: 1.5rem;
-            color: #b87a4b;
+        .card-title i {
+            font-size: 1.2rem;
+            color: #4183a4;
         }
-
-        .description {
-            color: #6b5a48;
-            font-size: 0.9rem;
-            line-height: 1.45;
-            margin: 0.5rem 0 1.2rem;
-            flex-grow: 1;
-        }
-
-        .tech-tag {
-            display: inline-block;
-            background: #e9e0d3;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            color: #7a5d42;
-            margin-bottom: 1rem;
-            width: fit-content;
-        }
-
-        .card-link {
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #2f241b;
-            color: #fef3e4;
-            padding: 0.6rem 1.2rem;
-            border-radius: 2rem;
+        .card-desc {
             font-size: 0.85rem;
-            transition: all 0.2s;
-            width: fit-content;
-            margin-top: 0.5rem;
-            border: 1px solid rgba(0,0,0,0.05);
+            color: #40657b;
+            line-height: 1.4;
         }
 
-        .card-link i {
-            font-size: 0.8rem;
-            transition: transform 0.2s;
-        }
-
-        .card-link:hover {
-            background: #4f3824;
-            gap: 12px;
-        }
-
-        .card-link:hover i {
-            transform: translateX(4px);
-        }
-
-        /* footer and readme section */
-        .footer-section {
-            margin-top: 3rem;
+        footer {
             text-align: center;
-            border-top: 1px solid rgba(140, 110, 80, 0.2);
+            margin-top: 4rem;
             padding-top: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+            border-top: 1px solid rgba(72, 110, 138, 0.2);
+            font-size: 0.85rem;
+            color: #587a94;
         }
-
-        .readme-link {
-            background: rgba(85, 65, 45, 0.1);
-            padding: 0.6rem 1.2rem;
-            border-radius: 2rem;
+        footer a {
+            color: #2c6c8f;
             text-decoration: none;
-            color: #5f4530;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .readme-link:hover {
-            background: #dacbb8;
-            color: #2f241b;
-        }
-
-        .credits {
-            color: #8b765d;
-            font-size: 0.8rem;
-        }
-
-        @media (max-width: 760px) {
+        @media (max-width: 750px) {
             .container {
-                padding: 1.2rem;
+                padding: 1.5rem;
             }
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2.4rem;
             }
-            .projects-grid {
+            .showcase-grid {
                 gap: 1.2rem;
             }
-            .card {
-                padding: 1.2rem;
-            }
-            .preview svg {
-                width: 85px;
-                height: 85px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 1.9rem;
-            }
-            .card h3 {
-                font-size: 1.4rem;
-            }
-        }
-
-        /* small decorative animation on svg icons on hover */
-        .preview svg .animated-stroke {
-            transition: stroke-dashoffset 0.2s;
-        }
-
-        .card:hover .preview svg .hover-motion {
-            animation: subtlePulse 0.6s ease;
-        }
-
-        @keyframes subtlePulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="hero">
-        <div class="hero-badge">
-            <i class="fas fa-pen-fancy" style="margin-right: 6px;"></i> line art · frame by frame
+        <div class="badge">
+            <i class="fas fa-cubes"></i>  interactive motion gallery
         </div>
-        <h1>line animation studio</h1>
-        <p>Six expressive motion experiments — each crafted with pure stroke-based animation. Watch lines draw, swing, bounce, and unfold.</p>
+        <h1>Motion Atlas</h1>
+        <p>Eight expressive animations — from a sleepy coffee cup to a spinning globe. Each card brings a unique kinetic story to life, crafted with pure CSS.</p>
     </div>
 
-    <div class="projects-grid">
-        
-        <!-- 001 COFFEE CUP -->
+    <div class="showcase-grid">
+        <!-- 001 coffee cup -->
         <div class="card">
-            <div class="preview">
-                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M32 58 L32 78 C32 84 68 84 68 78 L68 58" stroke="#7A5A42" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                    <path d="M68 63 C80 63 82 72 74 77 C68 80 68 75 68 73" stroke="#7A5A42" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                    <ellipse cx="50" cy="58" rx="18" ry="5" stroke="#9B6E48" stroke-width="2" fill="none"/>
-                    <path d="M40 48 C38 42 44 38 40 32" stroke="#9B6E48" stroke-width="2" stroke-linecap="round" fill="none"/>
-                    <path d="M50 46 C48 39 54 35 50 28" stroke="#9B6E48" stroke-width="2" stroke-linecap="round" fill="none"/>
-                    <path d="M60 48 C58 42 64 38 60 32" stroke="#9B6E48" stroke-width="2" stroke-linecap="round" fill="none"/>
-                    <animate attributeName="opacity" values="1" dur="0.01s" />
-                </svg>
+            <div class="preview-container">
+                <div class="animation-stage">
+                    <div class="coffee-cup">
+                        <div class="cup-body"></div>
+                        <div class="cup-handle"></div>
+                        <div class="steam"></div>
+                        <div class="steam"></div>
+                    </div>
+                </div>
             </div>
-            <h3><i class="fas fa-mug-hot"></i> 001 coffee cup</h3>
-            <div class="tech-tag"><i class="far fa-clock"></i> line drawing · steam loops</div>
-            <div class="description">
-                A steaming cup drawn stroke by stroke. Elegant handle, warm saucer, and hypnotic wisps of vapor — pure line meditation.
+            <div class="card-info">
+                <div class="card-title"><i class="fas fa-mug-hot"></i> 001 · Coffee Cup</div>
+                <div class="card-desc">Gentle floating motion with rising aromatic steam. A cozy morning vibe.</div>
             </div>
-            <a href="./001%20coffee%20cup/index.html" class="card-link" target="_blank">
-                experience animation <i class="fas fa-arrow-right"></i>
-            </a>
         </div>
 
-        <!-- 002 GROWING PLANT -->
+        <!-- 002 growing plant -->
         <div class="card">
-            <div class="preview">
-                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 85 L50 60" stroke="#517A48" stroke-width="2.8" stroke-linecap="round"/>
-                    <path d="M50 70 C38 64 35 52 48 58" stroke="#517A48" stroke-width="2.5" stroke-linecap="round"/>
-                    <path d="M50 65 C64 59 67 46 52 52" stroke="#517A48" stroke-width="2.5" stroke-linecap="round"/>
-                    <path d="M50 50 C38 38 44 26 50 38 C56 26 62 38 50 50" stroke="#3F7A44" stroke-width="2.5" stroke-linecap="round"/>
-                    <circle cx="50" cy="38" r="2" fill="#C2D93B" opacity="0.8"/>
-                </svg>
+            <div class="preview-container">
+                <div class="animation-stage">
+                    <div class="plant-pot">
+                        <div class="pot"></div>
+                        <div class="stem">
+                            <div class="leaf"></div>
+                            <div class="leaf leaf2"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h3><i class="fas fa-seedling"></i> 002 growing plant</h3>
-            <div class="tech-tag"><i class="fas fa-leaf"></i> growth cycle · organic motion</div>
-            <div class="description">
-                A mint plant emerges from soil: stem, leaves, and crown unfurl in a continuous animated loop — pure nature.
+            <div class="card-info">
+                <div class="card-title"><i class="fas fa-seedling"></i> 002 · Growing Plant</div>
+                <div class="card-desc">Stem stretches upward as leaves bloom in an infinite spring rhythm.</div>
             </div>
-            <a href="./002%20growing%20plant/index.html" class="card-link" target="_blank">
-                experience animation <i class="fas fa-arrow-right"></i>
-            </a>
         </div>
 
-        <!-- 003 POURING LIQUID -->
+        <!-- 003 pouring liquid -->
         <div class="card">
-            <div class="preview">
-                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M28 42 L28 70 C28 76 44 76 44 70 L44 42" stroke="#5C6D70" stroke-width="2.5" stroke-linecap="round"/>
-                    <path d="M44 56 L58 46" stroke="#568C8E" stroke-width="2.5" stroke-linecap="round"/>
-                    <path d="M58 46 L58 72" stroke="#568C8E" stroke-width="2.2" stroke-linecap="round"/>
-                    <path d="M58 72 C58 78 74 78 74 72 L74 52" stroke="#568C8E" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M50 46 L62 38" stroke="#568C8E" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 2"/>
-                    <circle cx="66" cy="44" r="1.5" fill="#7CABB0" opacity="0.6"/>
-                </svg>
+            <div class="preview-container">
+                <div class="animation-stage">
+                    <div class="pour-set">
+                        <div class="bottle"></div>
+                        <div class="drop"></div>
+                        <div class="glass"></div>
+                    </div>
+                </div>
             </div>
-            <h3><i class="fas fa-tint"></i> 003 pouring liquid</h3>
-            <div class="tech-tag"><i class="fas fa-water"></i> fluid dynamics · stream line</div>
-            <div class="description">
-                A graceful stream of liquid pours from one vessel to another. Fluid strokes capture motion and transparency.
+            <div class="card-info">
+                <div class="card-title"><i class="fas fa-wine-bottle"></i> 003 · Pouring Liquid</div>
+                <div class="card-desc">Dynamic tilt and droplet fall. Smooth cascade into a glass.</div>
             </div>
-            <a href="./003%20pouring%20liquid/index.html" class="card-link" target="_blank">
-                experience animation <i class="fas fa-arrow-right"></i>
-            </a>
         </div>
 
-        <!-- 004 SWINGING PENDULUM -->
+        <!-- 004 swinging pendulum -->
         <div class="card">
-            <div class="preview">
-                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="30" y1="20" x2="70" y2="20" stroke="#785A3A" stroke-width="2.5" stroke-linecap="round"/>
-                    <circle cx="50" cy="20" r="3" stroke="#785A3A" stroke-width="2" fill="none"/>
-                    <g transform="rotate(18 50 20)">
-                        <line x1="50" y1="20" x2="50" y2="60" stroke="#785A3A" stroke-width="2.5" stroke-linecap="round"/>
-                        <circle cx="50" cy="62" r="12" stroke="#8B694A" stroke-width="2.5" fill="none"/>
-                        <line x1="44" y1="62" x2="56" y2="62" stroke="#8B694A" stroke-width="2"/>
-                    </g>
-                </svg>
+            <div class="preview-container">
+                <div class="animation-stage">
+                    <div class="pendulum">
+                        <div class="string">
+                            <div class="bob"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h3><i class="fas fa-clock"></i> 004 swinging pendulum</h3>
-            <div class="tech-tag"><i class="fas fa-chart-line"></i> harmonic motion · physics</div>
-            <div class="description">
-                Classic pendulum with a rhythmic swing. The bob arcs gracefully, showcasing timeless mechanical elegance.
+            <div class="card-info">
+                <div class="card-title"><i class="fas fa-chart-line"></i> 004 · Swinging Pendulum</div>
+                <div class="card-desc">Rhythmic harmonic motion, classic physics-inspired loop.</div>
             </div>
-            <a href="./004%20swinging%20pendulum/index.html" class="card-link" target="_blank">
-                experience animation <i class="fas fa-arrow-right"></i>
-            </a>
         </div>
 
-        <!-- 005 BOUNCING BASKETBALL -->
+        <!-- 005 bouncing basketball -->
         <div class="card">
-            <div class="preview">
-                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="42" r="14" stroke="#C27E3A" stroke-width="2.5" fill="none"/>
-                    <path d="M38 46 C44 54 56 54 62 46" stroke="#C27E3A" stroke-width="2" fill="none"/>
-                    <path d="M44 36 L56 48" stroke="#C27E3A" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M56 36 L44 48" stroke="#C27E3A" stroke-width="2" stroke-linecap="round"/>
-                    <ellipse cx="50" cy="74" rx="12" ry="3" stroke="#B48C5C" stroke-width="1.8" stroke-dasharray="3 2" fill="none"/>
-                </svg>
+            <div class="preview-container">
+                <div class="animation-stage">
+                    <div class="bball"></div>
+                </div>
             </div>
-            <h3><i class="fas fa-basketball-ball"></i> 005 bouncing basketball</h3>
-            <div class="tech-tag"><i class="fas fa-arrow-down"></i> elastic bounce · trajectory</div>
-            <div class="description">
-                A basketball rhythmically hits the ground, compressing and springing back with convincing squash & stretch.
+            <div class="card-info">
+                <div class="card-title"><i class="fas fa-basketball-ball"></i> 005 · Bouncing Basketball</div>
+                <div class="card-desc">Energetic bounce with squash-and-stretch illusion.</div>
             </div>
-            <a href="./005%20bouncing%20basketball/index.html" class="card-link" target="_blank">
-                experience animation <i class="fas fa-arrow-right"></i>
-            </a>
         </div>
 
-        <!-- 006 TYPING ROBOT -->
+        <!-- 006 typing robot -->
         <div class="card">
-            <div class="preview">
-                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="28" y="38" width="44" height="32" rx="8" stroke="#536878" stroke-width="2.5" fill="none"/>
-                    <circle cx="40" cy="52" r="3.5" stroke="#536878" stroke-width="2" fill="none"/>
-                    <circle cx="60" cy="52" r="3.5" stroke="#536878" stroke-width="2" fill="none"/>
-                    <path d="M42 66 L58 66" stroke="#536878" stroke-width="2" stroke-linecap="round"/>
-                    <rect x="35" y="72" width="30" height="6" rx="2" stroke="#536878" stroke-width="1.8" fill="none"/>
-                    <line x1="68" y1="46" x2="78" y2="44" stroke="#859BA6" stroke-width="2" stroke-linecap="round"/>
-                    <line x1="68" y1="52" x2="80" y2="52" stroke="#859BA6" stroke-width="2" stroke-linecap="round"/>
-                    <line x1="68" y1="58" x2="78" y2="60" stroke="#859BA6" stroke-width="2" stroke-linecap="round"/>
-                </svg>
+            <div class="preview-container">
+                <div class="animation-stage">
+                    <div class="robot">
+                        <div class="robot-face">🤖 ⌨️</div>
+                        <div class="typing-text">>_ coding.exe</div>
+                    </div>
+                </div>
             </div>
-            <h3><i class="fas fa-robot"></i> 006 typing robot</h3>
-            <div class="tech-tag"><i class="fas fa-keyboard"></i> retro-future · keystroke dance</div>
-            <div class="description">
-                A cute robot types on a tiny keyboard, keys moving in sequence. Mechanical charm meets line animation.
+            <div class="card-info">
+                <div class="card-title"><i class="fas fa-microchip"></i> 006 · Typing Robot</div>
+                <div class="card-desc">Retro robot with blinking cursor and electric glow effect.</div>
             </div>
-            <a href="./006%20typing%20robot/index.html" class="card-link" target="_blank">
-                experience animation <i class="fas fa-arrow-right"></i>
-            </a>
+        </div>
+
+        <!-- 007 unfolding origami -->
+        <div class="card">
+            <div class="preview-container">
+                <div class="animation-stage">
+                    <div class="origami">
+                        <div class="crane"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-info">
+                <div class="card-title"><i class="fas fa-paper-plane"></i> 007 · Unfolding Origami</div>
+                <div class="card-desc">Kinetic fold & rotational reveal, like a paper crane taking form.</div>
+            </div>
+        </div>
+
+        <!-- 008 rotating globe -->
+        <div class="card">
+            <div class="preview-container">
+                <div class="animation-stage">
+                    <div class="globe"></div>
+                </div>
+            </div>
+            <div class="card-info">
+                <div class="card-title"><i class="fas fa-globe-americas"></i> 008 · Rotating Globe</div>
+                <div class="card-desc">360° endless rotation, evoking world exploration.</div>
+            </div>
         </div>
     </div>
 
-    <div class="footer-section">
-        <a href="./README.md" class="readme-link" target="_blank">
-            <i class="fas fa-book-open"></i> project README
-        </a>
-        <div class="credits">
-            <i class="fas fa-pen-ruler"></i> six line animations · pure CSS + JS · stroke obsession
-        </div>
-        <div class="credits">
-            ⚡ each demo uses SVG & keyframe drawing
-        </div>
-    </div>
+    <footer>
+        <i class="fas fa-code-branch"></i> interactive animation gallery · 8 unique micro-interactions · CSS-driven performance<br>
+        <span style="font-size: 0.75rem;">© motion atlas — every item inspired by 001 → 008 sequence. hover cards for subtle elevation.</span>
+    </footer>
 </div>
 </body>
 </html>
